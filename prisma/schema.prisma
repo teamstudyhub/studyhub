@@ -14,5 +14,11 @@ datasource db {
   reg_no String @unique
   first_name String
   last_name String
+ }
 
+ model staffs{
+  staff_id String @db.Uuid @id @default(uuid())
+  first_name String
+  last_name String
+  mail_id String @unique
  }
