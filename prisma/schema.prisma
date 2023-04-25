@@ -9,17 +9,26 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
- model student{
-  mail_id String @unique @id
-  reg_no String @unique
-  first_name String
-  last_name String
- }
 
- model staffs{
-  staff_id String @db.Uuid @id @default(uuid())
+model student {
+  mail_id    String @id @unique
+  reg_no     String @unique
   first_name String
-  last_name String
-  mail_id String @unique
-  age Int
- }
+  last_name  String
+}
+
+model Staffs {
+  id         String  @id @default(uuid()) @db.Uuid
+  first_name String
+  last_name  String
+  mail_id    String  @unique
+  age        Int
+  notes      notes[]
+}
+
+model notes {
+  id      String @id @default(uuid()) @db.Uuid
+  title   String
+  staff   Staffs @relation(fields: [staffId], references: [id])
+  staffId String @db.Uuid
+}
