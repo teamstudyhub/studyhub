@@ -21,4 +21,5 @@ datasource db {
   first_name String
   last_name String
   mail_id String @unique
+  age Int
  }
