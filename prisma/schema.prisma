@@ -11,24 +11,221 @@ datasource db {
 }
 
 model student {
-  mail_id    String @id @unique
-  reg_no     String @unique
-  first_name String
-  last_name  String
+  id String @id @default(uuid()) @db.Uuid
+
+  first_name             String
+  mail_id                String                   @unique
+  reg_no                 String                   @unique
+  ph_no                  Int                      @unique
+  bio                    String
+  branch                 branch                   @relation(fields: [branch_id], references: [branch_id])
+  branch_id              String                   @default(uuid()) @db.Uuid
+  semester               semesters                @relation(fields: [sem_no], references: [sem_no])
+  sem_no                 Int
+  college                college                  @relation(fields: [college_code], references: [college_code])
+  college_code           Int
+  address                String
+  fav_id                 Int
+  session                session_details          @relation(fields: [session_id], references: [session_id])
+  session_id             String                   @default(uuid()) @db.Uuid
+  favourites             favourites[]
+  review                 review[]
+  test_details           test_details[]
+  student_test_details   student_test_details[]
+  password_reset_request password_reset_request[]
+  password_history       password_history[]
+  forgot_password        forgot_password[]
+  password_request_token password_request_token[]
+  test_history           test_history[]
 }
 
-model Staffs {
-  id         String  @id @default(uuid()) @db.Uuid
-  first_name String
-  last_name  String
-  mail_id    String  @unique
-  age        Int
-  notes      notes[]
+model Staff {
+  id       String @id @default(uuid()) @db.Uuid
+  name     String
+  mail_id  String @unique
+  password String
+
+  ph_no         Int
+  semester      semesters      @relation(fields: [sem_no], references: [sem_no])
+  sem_no        Int
+  college       college        @relation(fields: [college_code], references: [college_code])
+  college_code  Int
+  branch        branch         @relation(fields: [branch_id], references: [branch_id])
+  branch_id     String         @default(uuid()) @db.Uuid
+  qualification String
+  session_id    String         @default(uuid()) @db.Uuid
+  notes         notes[]
+  test_details  test_details[]
+}
+
+model subjects {
+  sub_code     String         @id
+  sub_name     String
+  semester     semesters      @relation(fields: [sem_no], references: [sem_no])
+  sem_no       Int
+  notes        notes[]
+  test_details test_details[]
+}
+
+model semesters {
+  sem_no   Int        @id @default(autoincrement())
+  student  student[]
+  Staff    Staff[]
+  subjects subjects[]
+  notes    notes[]
+}
+
+model branch {
+  branch_id   String    @id @default(uuid()) @db.Uuid
+  branch_name String
+  Staff       Staff[]
+  student     student[]
+  notes       notes[]
+}
+
+model college {
+  college_code    Int       @id
+  college_name    String
+  address         String
+  college_mail    String
+  college_website String
+  student         student[]
+  Staff           Staff[]
+}
+
+model favourites {
+  fav_id     Int     @unique @default(autoincrement())
+  mail_id    student @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id String
+  note       notes   @relation(fields: [notes_id], references: [id])
+  notes_id   String  @default(uuid()) @db.Uuid
 }
 
 model notes {
-  id      String @id @default(uuid()) @db.Uuid
-  title   String
-  staff   Staffs @relation(fields: [staffId], references: [id])
-  staffId String @db.Uuid
+  id               String       @id @default(uuid()) @db.Uuid
+  title            String
+  staff            Staff        @relation(fields: [staffId], references: [id])
+  staffId          String       @db.Uuid
+  unit_no          String
+  unit_name        String
+  branch           branch       @relation(fields: [branch_id], references: [branch_id])
+  branch_id        String       @default(uuid()) @db.Uuid
+  semester         semesters    @relation(fields: [sem_no], references: [sem_no])
+  sem_no           Int
+  subject          subjects     @relation(fields: [sub_code], references: [sub_code])
+  sub_code         String
+  uploaded_date    DateTime     @default(now())
+  likes            Int
+  dislikes         Int
+  limit_visibility Boolean
+  favourites       favourites[]
+  review           review[]
+}
+
+model review {
+  id             String  @id @default(uuid()) @db.Uuid
+  mail_id        student @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id     String
+  review_content String
+  note           notes   @relation(fields: [notes_id], references: [id])
+  notes_id       String  @default(uuid()) @db.Uuid
+}
+
+model session_details {
+  session_id  String    @id @default(uuid()) @db.Uuid
+  login_time  DateTime  @default(now())
+  logout_time DateTime  @default(now())
+  student     student[]
+}
+
+model test_details {
+  test_id              String                 @id @default(uuid()) @db.Uuid
+  mail_id              student                @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id           String
+  staff                Staff                  @relation(fields: [staffId], references: [id])
+  staffId              String                 @db.Uuid
+  test_title           String
+  subject              subjects               @relation(fields: [sub_code], references: [sub_code])
+  sub_code             String
+  questions_details    questions_details[]
+  timelimit            DateTime
+  conduction_date      DateTime
+  lifetime             Boolean
+  end_date             DateTime
+  student_test_details student_test_details[]
+  test_history         test_history[]
+}
+
+model questions_details {
+  q_id String @id @default(uuid()) @db.Uuid
+
+  options String[]
+  answer  String
+  test    test_details @relation(fields: [test_id], references: [test_id])
+  test_id String       @default(uuid()) @db.Uuid
+}
+
+model student_test_details {
+  id             String       @id @default(uuid()) @db.Uuid
+  test           test_details @relation(fields: [test_id], references: [test_id])
+  test_id        String       @default(uuid()) @db.Uuid
+  mail_id        student      @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id     String
+  answer         String
+  total_marks    Int
+  duration       DateTime
+  submitted_date DateTime
+}
+
+model test_history {
+  conduction_date DateTime     @id @default(now())
+  test            test_details @relation(fields: [test_id], references: [test_id])
+  test_id         String       @default(uuid()) @db.Uuid
+  mail_id         student      @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id      String
+  submitted_date  DateTime
+  marks_allocated Int
+}
+
+model password_reset_request {
+  request_id           String   @id @default(uuid()) @db.Uuid
+  mail_id              student  @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id           String
+  requested_at         DateTime
+  requested_ip_address Int
+  status               Boolean
+  created_at           DateTime
+  updated_at           DateTime
+}
+
+model password_history {
+  token_id   String   @id @default(uuid()) @db.Uuid
+  mail_id    student  @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id String
+  password   String
+  created_at DateTime
+  is_current Boolean
+}
+
+model forgot_password {
+  id              String   @id @default(uuid()) @db.Uuid
+  mail_id         student  @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id      String
+  token           Int
+  email_id        Int
+  expiration_time DateTime
+  created_at      DateTime
+  updated_at      DateTime
+}
+
+model password_request_token {
+  token_id        String   @id @default(uuid()) @db.Uuid
+  mail_id         student  @relation(fields: [st_mail_id], references: [mail_id])
+  st_mail_id      String
+  token           String
+  expiration_date DateTime
+  used_at         DateTime
+  status          Boolean
+  created_at      DateTime
+  updated_at      DateTime
 }
