@@ -10,52 +10,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model student {
-  id String @id @default(uuid()) @db.Uuid
+model users {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  first_name             String
-  mail_id                String                   @unique
-  reg_no                 String                   @unique
-  ph_no                  Int                      @unique
-  bio                    String
-  branch                 branch                   @relation(fields: [branch_id], references: [branch_id])
-  branch_id              String                   @default(uuid()) @db.Uuid
-  semester               semesters                @relation(fields: [sem_no], references: [sem_no])
-  sem_no                 Int
-  college                college                  @relation(fields: [college_code], references: [college_code])
-  college_code           Int
-  address                String
-  fav_id                 Int
-  session                session_details          @relation(fields: [session_id], references: [session_id])
-  session_id             String                   @default(uuid()) @db.Uuid
-  favourites             favourites[]
-  review                 review[]
-  test_details           test_details[]
-  student_test_details   student_test_details[]
-  password_reset_request password_reset_request[]
-  password_history       password_history[]
-  forgot_password        forgot_password[]
-  password_request_token password_request_token[]
-  test_history           test_history[]
+  first_name String
+  last_name  String
+  mail_id    String @unique
+
+  address         String
+  student_test    student_test_details[]
+  branch          branch                 @relation(fields: [branch_name], references: [branch_name])
+  favourites_list favourites[]
+  note            notes[]
+  session         session_details[]
+  test_history    test_history[]
+
+  user_details user_details[]
+  semesters    semesters      @relation(fields: [sem_no], references: [sem_no])
+  sem_no       Int
+  role         Roles
+  review       review[]
+  test_details test_details[]
+  college      college        @relation(fields: [college_code], references: [college_code])
+  college_code String
+  review_reply review_reply[]
+  branch_name  String
 }
 
-model Staff {
-  id       String @id @default(uuid()) @db.Uuid
-  name     String
-  mail_id  String @unique
-  password String
+model user_details {
+  id      String @id @default(uuid()) @db.Uuid
+  user    users  @relation(fields: [user_id], references: [id])
+  user_id String @db.Uuid
+  reg_no  String @unique
+  bio     String
 
-  ph_no         Int
-  semester      semesters      @relation(fields: [sem_no], references: [sem_no])
+  semester      semesters @relation(fields: [sem_no], references: [sem_no])
   sem_no        Int
-  college       college        @relation(fields: [college_code], references: [college_code])
-  college_code  Int
-  branch        branch         @relation(fields: [branch_id], references: [branch_id])
-  branch_id     String         @default(uuid()) @db.Uuid
   qualification String
-  session_id    String         @default(uuid()) @db.Uuid
-  notes         notes[]
-  test_details  test_details[]
+}
+
+enum Roles {
+  STAFF
+  STUDENT
 }
 
 model subjects {
@@ -68,82 +64,96 @@ model subjects {
 }
 
 model semesters {
-  sem_no   Int        @id @default(autoincrement())
-  student  student[]
-  Staff    Staff[]
-  subjects subjects[]
-  notes    notes[]
+  sem_no Int     @id @unique
+  user   users[]
+
+  subjects     subjects[]
+  notes        notes[]
+  user_details user_details[]
 }
 
 model branch {
-  branch_id   String    @id @default(uuid()) @db.Uuid
-  branch_name String
-  Staff       Staff[]
-  student     student[]
-  notes       notes[]
+  branch_name String @id @unique
+
+  notes notes[]
+  users users[]
 }
 
 model college {
-  college_code    Int       @id
+  college_code    String  @id @unique
   college_name    String
   address         String
   college_mail    String
   college_website String
-  student         student[]
-  Staff           Staff[]
+  user            users[]
 }
 
 model favourites {
-  fav_id     Int     @unique @default(autoincrement())
-  mail_id    student @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id String
-  note       notes   @relation(fields: [notes_id], references: [id])
-  notes_id   String  @default(uuid()) @db.Uuid
+  fav_id Int @unique @default(autoincrement())
+
+  note     notes  @relation(fields: [notes_id], references: [id])
+  notes_id String @default(uuid()) @db.Uuid
+  users    users  @relation(fields: [usersId], references: [id])
+  usersId  String @db.Uuid
 }
 
 model notes {
-  id               String       @id @default(uuid()) @db.Uuid
-  title            String
-  staff            Staff        @relation(fields: [staffId], references: [id])
-  staffId          String       @db.Uuid
-  unit_no          String
-  unit_name        String
-  branch           branch       @relation(fields: [branch_id], references: [branch_id])
-  branch_id        String       @default(uuid()) @db.Uuid
-  semester         semesters    @relation(fields: [sem_no], references: [sem_no])
-  sem_no           Int
-  subject          subjects     @relation(fields: [sub_code], references: [sub_code])
-  sub_code         String
-  uploaded_date    DateTime     @default(now())
-  likes            Int
-  dislikes         Int
-  limit_visibility Boolean
-  favourites       favourites[]
-  review           review[]
+  id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title String
+
+  unit_no           String
+  unit_name         String
+  branch            branch       @relation(fields: [branchBranch_name], references: [branch_name])
+  semester          semesters    @relation(fields: [sem_no], references: [sem_no])
+  sem_no            Int
+  subject           subjects     @relation(fields: [sub_code], references: [sub_code])
+  sub_code          String
+  uploaded_date     DateTime     @default(now())
+  likes             Int
+  dislikes          Int
+  limit_visibility  Boolean
+  favourites        favourites[]
+  review            review[]
+  users             users        @relation(fields: [usersId], references: [id])
+  usersId           String       @db.Uuid
+  branchBranch_name String
 }
 
 model review {
-  id             String  @id @default(uuid()) @db.Uuid
-  mail_id        student @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id     String
+  id             String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user           users          @relation(fields: [user_id], references: [id])
+  user_id        String         @db.Uuid
   review_content String
-  note           notes   @relation(fields: [notes_id], references: [id])
-  notes_id       String  @default(uuid()) @db.Uuid
+  note           notes          @relation(fields: [notes_id], references: [id])
+  notes_id       String         @default(uuid()) @db.Uuid
+  review_replies review_reply[]
+}
+
+model review_reply {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  users              users         @relation(fields: [usersId], references: [id])
+  usersId            String        @db.Uuid
+  review             review        @relation(fields: [reviewId], references: [id])
+  reviewId           String        @db.Uuid
+  reply              review_reply? @relation("own_reply")
+  reply_review_reply review_reply? @relation("own_reply", fields: [review_reply_id], references: [id])
+  review_reply_id    String        @unique @db.Uuid
+  content            String
 }
 
 model session_details {
-  session_id  String    @id @default(uuid()) @db.Uuid
-  login_time  DateTime  @default(now())
-  logout_time DateTime  @default(now())
-  student     student[]
+  session_id  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  login_time  DateTime @default(now())
+  logout_time DateTime @default(now())
+
+  users   users  @relation(fields: [usersId], references: [id])
+  usersId String @db.Uuid
 }
 
 model test_details {
-  test_id              String                 @id @default(uuid()) @db.Uuid
-  mail_id              student                @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id           String
-  staff                Staff                  @relation(fields: [staffId], references: [id])
-  staffId              String                 @db.Uuid
+  test_id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
   test_title           String
   subject              subjects               @relation(fields: [sub_code], references: [sub_code])
   sub_code             String
@@ -154,10 +164,13 @@ model test_details {
   end_date             DateTime
   student_test_details student_test_details[]
   test_history         test_history[]
+
+  users   users  @relation(fields: [usersId], references: [id])
+  usersId String @db.Uuid
 }
 
 model questions_details {
-  q_id String @id @default(uuid()) @db.Uuid
+  q_id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   options String[]
   answer  String
@@ -166,66 +179,26 @@ model questions_details {
 }
 
 model student_test_details {
-  id             String       @id @default(uuid()) @db.Uuid
-  test           test_details @relation(fields: [test_id], references: [test_id])
-  test_id        String       @default(uuid()) @db.Uuid
-  mail_id        student      @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id     String
+  id      String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  test    test_details @relation(fields: [test_id], references: [test_id])
+  test_id String       @default(uuid()) @db.Uuid
+
   answer         String
   total_marks    Int
   duration       DateTime
   submitted_date DateTime
+  users          users    @relation(fields: [usersId], references: [id])
+  usersId        String   @db.Uuid
 }
 
 model test_history {
-  conduction_date DateTime     @id @default(now())
+  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  conduction_date DateTime     @default(now())
   test            test_details @relation(fields: [test_id], references: [test_id])
   test_id         String       @default(uuid()) @db.Uuid
-  mail_id         student      @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id      String
+
   submitted_date  DateTime
   marks_allocated Int
-}
-
-model password_reset_request {
-  request_id           String   @id @default(uuid()) @db.Uuid
-  mail_id              student  @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id           String
-  requested_at         DateTime
-  requested_ip_address Int
-  status               Boolean
-  created_at           DateTime
-  updated_at           DateTime
-}
-
-model password_history {
-  token_id   String   @id @default(uuid()) @db.Uuid
-  mail_id    student  @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id String
-  password   String
-  created_at DateTime
-  is_current Boolean
-}
-
-model forgot_password {
-  id              String   @id @default(uuid()) @db.Uuid
-  mail_id         student  @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id      String
-  token           Int
-  email_id        Int
-  expiration_time DateTime
-  created_at      DateTime
-  updated_at      DateTime
-}
-
-model password_request_token {
-  token_id        String   @id @default(uuid()) @db.Uuid
-  mail_id         student  @relation(fields: [st_mail_id], references: [mail_id])
-  st_mail_id      String
-  token           String
-  expiration_date DateTime
-  used_at         DateTime
-  status          Boolean
-  created_at      DateTime
-  updated_at      DateTime
+  users           users    @relation(fields: [usersId], references: [id])
+  usersId         String   @db.Uuid
 }
