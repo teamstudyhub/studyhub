@@ -15,7 +15,8 @@ model users {
 
   first_name String
   last_name  String
-  mail_id    String @unique
+  mail_id    String  @unique
+  password   String?
 
   address         String
   student_test    student_test_details[]
@@ -25,9 +26,8 @@ model users {
   session         session_details[]
   test_history    test_history[]
 
-  user_details user_details[]
   semesters    semesters      @relation(fields: [sem_no], references: [sem_no])
-  sem_no       Int
+  sem_no       String
   role         Roles
   review       review[]
   test_details test_details[]
@@ -35,18 +35,18 @@ model users {
   college_code String
   review_reply review_reply[]
   branch_name  String
+  user_details user_details[]
 }
 
 model user_details {
-  id      String @id @default(uuid()) @db.Uuid
-  user    users  @relation(fields: [user_id], references: [id])
-  user_id String @db.Uuid
-  reg_no  String @unique
-  bio     String
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  semester      semesters @relation(fields: [sem_no], references: [sem_no])
-  sem_no        Int
-  qualification String
+  reg_no String? @unique
+  bio    String?
+
+  qualification String?
+  users         users?  @relation(fields: [usersId], references: [id])
+  usersId       String? @db.Uuid
 }
 
 enum Roles {
@@ -58,18 +58,17 @@ model subjects {
   sub_code     String         @id
   sub_name     String
   semester     semesters      @relation(fields: [sem_no], references: [sem_no])
-  sem_no       Int
+  sem_no       String
   notes        notes[]
   test_details test_details[]
 }
 
 model semesters {
-  sem_no Int     @id @unique
+  sem_no String  @id @unique
   user   users[]
 
-  subjects     subjects[]
-  notes        notes[]
-  user_details user_details[]
+  subjects subjects[]
+  notes    notes[]
 }
 
 model branch {
@@ -89,10 +88,10 @@ model college {
 }
 
 model favourites {
-  fav_id Int @unique @default(autoincrement())
+  fav_id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   note     notes  @relation(fields: [notes_id], references: [id])
-  notes_id String @default(uuid()) @db.Uuid
+  notes_id String @db.Uuid
   users    users  @relation(fields: [usersId], references: [id])
   usersId  String @db.Uuid
 }
@@ -101,22 +100,23 @@ model notes {
   id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title String
 
-  unit_no           String
-  unit_name         String
-  branch            branch       @relation(fields: [branchBranch_name], references: [branch_name])
-  semester          semesters    @relation(fields: [sem_no], references: [sem_no])
-  sem_no            Int
-  subject           subjects     @relation(fields: [sub_code], references: [sub_code])
-  sub_code          String
-  uploaded_date     DateTime     @default(now())
-  likes             Int
-  dislikes          Int
-  limit_visibility  Boolean
-  favourites        favourites[]
-  review            review[]
-  users             users        @relation(fields: [usersId], references: [id])
-  usersId           String       @db.Uuid
-  branchBranch_name String
+  unit_no          String
+  unit_name        String
+  branch           branch       @relation(fields: [branch_name], references: [branch_name])
+  semester         semesters    @relation(fields: [sem_no], references: [sem_no])
+  sem_no           String
+  subject          subjects     @relation(fields: [sub_code], references: [sub_code])
+  sub_code         String
+  uploaded_date    DateTime?    @default(now())
+  likes            Int
+  dislikes         Int
+  file_url         String?
+  limit_visibility Boolean?     @default(false)
+  favourites       favourites[]
+  review           review[]
+  users            users        @relation(fields: [usersId], references: [id])
+  usersId          String       @db.Uuid
+  branch_name      String
 }
 
 model review {
