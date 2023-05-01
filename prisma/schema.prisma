@@ -26,16 +26,17 @@ model users {
   session         session_details[]
   test_history    test_history[]
 
-  semesters    semesters      @relation(fields: [sem_no], references: [sem_no])
-  sem_no       String
-  role         Roles
-  review       review[]
-  test_details test_details[]
-  college      college        @relation(fields: [college_code], references: [college_code])
-  college_code String
-  review_reply review_reply[]
-  branch_name  String
-  user_details user_details[]
+  semesters       semesters         @relation(fields: [sem_no], references: [sem_no])
+  sem_no          String
+  role            Roles
+  review          review[]
+  test_details    test_details[]
+  college         college           @relation(fields: [college_code], references: [college_code])
+  college_code    String
+  review_reply    review_reply[]
+  branch_name     String
+  user_details    user_details[]
+  student_answers student_answers[]
 }
 
 model user_details {
@@ -138,7 +139,7 @@ model review_reply {
   reviewId           String        @db.Uuid
   reply              review_reply? @relation("own_reply")
   reply_review_reply review_reply? @relation("own_reply", fields: [review_reply_id], references: [id])
-  review_reply_id    String        @unique @db.Uuid
+  review_reply_id    String?       @unique @db.Uuid
   content            String
 }
 
@@ -158,10 +159,10 @@ model test_details {
   subject              subjects               @relation(fields: [sub_code], references: [sub_code])
   sub_code             String
   questions_details    questions_details[]
-  timelimit            DateTime
-  conduction_date      DateTime
-  lifetime             Boolean
-  end_date             DateTime
+  timelimit            DateTime?              @default(now())
+  conduction_date      DateTime?              @default(now())
+  lifetime             Boolean?               @default(false)
+  end_date             DateTime?              @default(now())
   student_test_details student_test_details[]
   test_history         test_history[]
 
@@ -170,12 +171,13 @@ model test_details {
 }
 
 model questions_details {
-  q_id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-
-  options String[]
-  answer  String
-  test    test_details @relation(fields: [test_id], references: [test_id])
-  test_id String       @default(uuid()) @db.Uuid
+  q_id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  question        String
+  options         String[]
+  answer          String
+  test            test_details      @relation(fields: [test_id], references: [test_id])
+  test_id         String            @default(uuid()) @db.Uuid
+  student_answers student_answers[]
 }
 
 model student_test_details {
@@ -183,12 +185,21 @@ model student_test_details {
   test    test_details @relation(fields: [test_id], references: [test_id])
   test_id String       @default(uuid()) @db.Uuid
 
-  answer         String
   total_marks    Int
-  duration       DateTime
-  submitted_date DateTime
+  duration       DateTime @default(now())
+  submitted_date DateTime @default(now())
   users          users    @relation(fields: [usersId], references: [id])
   usersId        String   @db.Uuid
+}
+
+model student_answers {
+  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  answer String
+
+  questions_details questions_details @relation(fields: [q_id], references: [q_id])
+  q_id              String            @db.Uuid
+  users             users            @relation(fields: [usersId], references: [id])
+  usersId           String           @db.Uuid
 }
 
 model test_history {
@@ -197,7 +208,7 @@ model test_history {
   test            test_details @relation(fields: [test_id], references: [test_id])
   test_id         String       @default(uuid()) @db.Uuid
 
-  submitted_date  DateTime
+  submitted_date  DateTime @default(now())
   marks_allocated Int
   users           users    @relation(fields: [usersId], references: [id])
   usersId         String   @db.Uuid

@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+/*import { Prisma, PrismaClient } from "@prisma/client";
 
 const client = new PrismaClient();
 
@@ -72,7 +72,7 @@ const getNotes = (branch_name:string, sem_no: string, usersId: string, sub_code:
     }
 ]
 
-const main = async () => {
+
 const getfavourites = (notes_id: string, usersId: string, sub_code:string): Prisma.favouritesCreateManyInput[] =>[
     {
         usersId,
@@ -90,39 +90,39 @@ const staff = await client.users.findFirst({
         role:"STAFF",
     }
 });
-const semesters= await client.semesters.findUnique({
+const semesters2= await client.semesters.findUnique({
     where:{
         sem_no:"4"
     }
 });
-const branch= await client.branch.findUnique({
+const branch2= await client.branch.findUnique({
     where:{
         branch_name:"CSE"
     }
 });
-const subject= await client.subjects.findUnique({
-    where:{
-        sub_code:"20CS21P"
-    }
-});
+
 const notes= await client.notes.findFirst();
 
 await client.user_details.createMany({
     data: getUser_details(student?.id!),
 });
 await client.subjects.createMany({
-    data: getSubjects(semesters?.sem_no!,),
+    data: getSubjects(semesters2?.sem_no!,),
+});
+const subject= await client.subjects.findUnique({
+    where:{
+        sub_code:"20CS21P"
+    }
 });
 
-
 await client.notes.createMany({
-    data: getNotes(branch?.branch_name!,
+    data: getNotes(branch2?.branch_name!,
         staff?.id!,
-        semesters?.sem_no!,
+        semesters2?.sem_no!,
         subject?.sub_code!
     ),
 });
-}
+
 main()
     .then(() => {
         console.log("Successfully Seeded");
@@ -130,6 +130,6 @@ main()
     .catch((e) => {
         console.log(e);
     });
-
+*/
 
 

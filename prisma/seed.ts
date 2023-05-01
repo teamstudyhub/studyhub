@@ -1,4 +1,6 @@
 import { Prisma, PrismaClient, Roles } from "@prisma/client";
+import { faker } from "@faker-js/faker";
+
 
 const client = new PrismaClient();
 
@@ -58,8 +60,8 @@ const getUsers = (
             first_name: "Rajath ",
             last_name: "R",
             address: "banglore",
-            password:"12345678",
-        
+            password: "12345678",
+
             mail_id: "rajath@gmail.com",
             branch_name: branch_name,
             college_code: college_code,
@@ -70,7 +72,7 @@ const getUsers = (
             first_name: "Raksha",
             last_name: "R",
             address: "banglore",
-            password:"12345678",
+            password: "12345678",
             mail_id: "raksha@gmail.com",
             branch_name: branch_name,
             college_code: college_code,
@@ -81,7 +83,7 @@ const getUsers = (
             first_name: "mangala",
             last_name: "R",
             address: "banglore",
-            password:"12345678",
+            password: "12345678",
             mail_id: "mangala@gmail.com",
             branch_name: branch_name,
             college_code: college_code,
@@ -92,7 +94,7 @@ const getUsers = (
             first_name: "Abu ",
             last_name: "Talha",
             address: "banglore",
-            password:"12345678",
+            password: "12345678",
             mail_id: "abu@gmail.com",
             branch_name: branch_name,
             college_code: college_code,
@@ -102,7 +104,7 @@ const getUsers = (
             first_name: "Ningappa ",
             last_name: "tango",
             address: "banglore",
-            password:"12345678",
+            password: "12345678",
             mail_id: "tango@gmail.com",
             branch_name: branch_name,
             college_code: college_code,
@@ -110,65 +112,186 @@ const getUsers = (
             sem_no: sem_no,
         },
     ];
-    const getUser_details = (usersId: string): Prisma.user_detailsCreateManyInput[] => [
-        {
-            usersId: usersId,
-            reg_no: "465CS20022",
-            bio: "programming is life",
-    
-        },
-    ];
-    
-    const getSubjects = (sem_no: string): Prisma.subjectsCreateManyInput[] => [
-        {
-            sub_code: "20CS21P",
-            sem_no: sem_no,
-            sub_name: "Operating systems"
-        },
-        {
-            sub_code: "20CS22P",
-            sem_no: sem_no,
-            sub_name: "Operating systems"
-        },
-        {
-            sub_code: "20CS23P",
-            sem_no: sem_no,
-            sub_name: "Sowtware engineering"
-        },
-        {
-            sub_code: "20CS24P",
-            sem_no: sem_no,
-            sub_name: "Hardware"
-        }
-    ]
-    const getNotes = (branch_name:string, sem_no: string, usersId: string, sub_code:string): Prisma.notesCreateManyInput[] => [
-        {
-            id:"c3a74524-4d80-4f4f-bab0-c0416e4ced3e",
-            branch_name:branch_name,
-            dislikes: 12,
-            likes: 100,
-            sem_no:sem_no,
-            sub_code:sub_code,
-            title: "Operating systems week 1",
-            unit_name:"introduction to os",
-            unit_no:"1",
-            usersId:usersId
-    
-        },
-    ]
-    const getfavourites = (notes_id: string, usersId: string, ): Prisma.favouritesCreateManyInput[] =>[
-        {
-            usersId,
-            notes_id,
-        }
-    ] 
-    
+const getUser_details_student = (usersId: string): Prisma.user_detailsCreateManyInput[] => [
+    {
+        usersId: usersId,
+        reg_no: "465CS20022",
+        bio: "programming is life",
+
+    },
+];
+const getUser_details_staff = (usersId: string): Prisma.user_detailsCreateManyInput[] => [
+    {
+        usersId: usersId,
+        qualification: "OS and python",
+
+
+    },
+];
+
+const getSubjects = (sem_no: string): Prisma.subjectsCreateManyInput[] => [
+    {
+        sub_code: "20CS21P",
+        sem_no: sem_no,
+        sub_name: "Operating systems"
+    },
+    {
+        sub_code: "20CS22P",
+        sem_no: sem_no,
+        sub_name: "Operating systems"
+    },
+    {
+        sub_code: "20CS23P",
+        sem_no: sem_no,
+        sub_name: "Sowtware engineering"
+    },
+    {
+        sub_code: "20CS24P",
+        sem_no: sem_no,
+        sub_name: "Hardware"
+    }
+]
+const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code: string): Prisma.notesCreateManyInput[] => [
+    {
+        id: "c3a74524-4d80-4f4f-bab0-c0416e4ced3e",
+        branch_name: branch_name,
+        dislikes: 12,
+        likes: 100,
+        sem_no: sem_no,
+        sub_code: sub_code,
+        title: "Operating systems week 1",
+        unit_name: "introduction to os",
+        unit_no: "1",
+        usersId: usersId
+
+    },
+]
+const getfavourites = (notes_id: string, usersId: string,): Prisma.favouritesCreateManyInput[] => [
+    {
+        usersId,
+        notes_id,
+    }
+]
+const getReviews = (notes_id: string, user_id: string,): Prisma.reviewCreateManyInput[] => [
+    {
+        user_id,
+        notes_id,
+        review_content: "very clear and easy to understand"
+    }
+]
+const getReview_reply = (reviewId: string, usersId: string, review_reply_id: string): Prisma.review_replyCreateManyInput[] => [
+    {
+        usersId,
+        reviewId,
+        content: "yes",
+        review_reply_id
+
+    }
+]
+const getTestdetails = (sub_code: string, usersId: string,): Prisma.test_detailsCreateManyInput[] => [
+    {
+        sub_code,
+        usersId,
+        test_title: "os week 1 unit test",
+
+    }
+]
+const getQuestions_details = (test_id: string): Prisma.questions_detailsCreateManyInput[] => [
+    {
+        test_id,
+        question: " what is os?",
+        answer: "Os means operating system",
+        options: ["Os means operating system", "os is an external factor in computing", "os stores data", "os means outsource"]
+    },
+    {
+        test_id,
+        question: " which part of an os enables virtualization?",
+        answer: "the hypervisor",
+        options: ["kernel", "mode bits", "the whole os", "the hypervisor"]
+    },
+    {
+        test_id,
+        question: "is it possible to have multiple os in a system/",
+        answer: "yes",
+        options: ["yes", "no"]
+    },
+    {
+        test_id,
+        question: "what does BIOS stand for",
+        answer: "Basic input output system",
+        options: ["basic input output system", "binary input output system", "binary in out systems", "basic in out system"]
+    },
+    {
+        test_id,
+        question: "is setting environment variables mandatory",
+        answer: "yes",
+        options: ["yes", "no"]
+    }
+]
+const getstudent_test_details = (test_id: string, usersId: string): Prisma.student_test_detailsCreateManyInput[] => [
+    {
+        usersId,
+        test_id,
+
+        total_marks: 5
+    }
+]
+const getStudent_answers = (q_id: string, usersId: string): Prisma.student_answersCreateManyInput[] => [
+    {
+        q_id,
+        answer: "os means operating system",
+        usersId
+    },
+    {
+        q_id,
+        answer: "the hypervisor",
+        usersId
+    },
+    {
+        q_id,
+        answer: "yes",
+        usersId
+    },
+    {
+        q_id,
+        answer: "Basic input output system",
+        usersId
+    },
+    {
+        q_id,
+        answer: "yes",
+        usersId
+    }
+]
+
+const getTestHistory = (test_id: string, usersId: string): Prisma.test_historyCreateManyInput[] => [
+    {
+        marks_allocated: 5,
+        usersId,
+        test_id
+    }
+]
+
+
 
 
 const main = async () => {
-    
-
-
+    await client.student_answers.deleteMany();
+    await client.session_details.deleteMany();
+    await client.test_history.deleteMany();
+    await client.student_test_details.deleteMany();
+    await client.questions_details.deleteMany();
+    await client.test_details.deleteMany();
+    await client.review_reply.deleteMany();
+    await client.review.deleteMany();
+    await client.favourites.deleteMany();
+    await client.notes.deleteMany();
+    await client.user_details.deleteMany();
+    await client.users.deleteMany();
+    await client.subjects.deleteMany();
+    await client.semesters.deleteMany();
+    await client.branch.deleteMany();
+    await client.college.deleteMany();
 
     await client.college.createMany({
         data: getCollege(),
@@ -182,7 +305,7 @@ const main = async () => {
     });
     const semesters = await client.semesters.findUnique({
         where: {
-            sem_no:"6",
+            sem_no: "6",
         }
     });
     const branch = await client.branch.findUnique({
@@ -199,60 +322,106 @@ const main = async () => {
 
         ),
     });
-    
-const student = await client.users.findFirst({
-    where: {
-        role:"STUDENT",
-    }
-});
-const staff = await client.users.findFirst({
-    where: {
-        role:"STAFF",
-    }
-});
-const semesters2= await client.semesters.findUnique({
-    where:{
-        sem_no:"4"
-    }
-});
-const branch2= await client.branch.findUnique({
-    where:{
-        branch_name:"CSE"
-    }
-});
+
+    const student = await client.users.findFirst({
+        where: {
+            role: "STUDENT",
+        }
+    });
+    const staff = await client.users.findFirst({
+        where: {
+            role: "STAFF",
+        }
+    });
+    const semesters2 = await client.semesters.findUnique({
+        where: {
+            sem_no: "4"
+        }
+    });
+    const branch2 = await client.branch.findUnique({
+        where: {
+            branch_name: "CSE"
+        }
+    });
 
 
 
-await client.user_details.createMany({
-    data: getUser_details(student?.id!),
-});
-await client.subjects.createMany({
-    data: getSubjects(semesters2?.sem_no!,),
-});
-const subject= await client.subjects.findUnique({
-    where:{
-        sub_code:"20CS21P"
-    }
-});
-await client.notes.createMany({
-    data: getNotes(
-        branch?.branch_name!,
-        semesters?.sem_no!,
-        staff?.id!,
-        subject?.sub_code!
-    ),
-});
+    await client.user_details.createMany({
+        data: getUser_details_student(student?.id!),
+    });
+    await client.user_details.createMany({
+        data: getUser_details_staff(staff?.id!),
+    });
+    await client.subjects.createMany({
+        data: getSubjects(semesters2?.sem_no!,),
+    });
+    const subject = await client.subjects.findUnique({
+        where: {
+            sub_code: "20CS21P"
+        }
+    });
+    await client.notes.createMany({
+        data: getNotes(
+            branch2?.branch_name!,
+            semesters2?.sem_no!,
+            staff?.id!,
+            subject?.sub_code!
+        ),
+    });
 
 
-const notes= await client.notes.findFirst();
-await client.favourites.createMany({
-    data: getfavourites(notes?.id!,
-        student?.id!,
+    const notes = await client.notes.findFirst();
+    await client.favourites.createMany({
+        data: getfavourites(notes?.id!,
+            student?.id!,
+
+        ),
+    });
+    await client.review.createMany(
+        {
+            data: getReviews(notes?.id!, student?.id!)
+        }
+    );
+    const reviews = await client.review.findFirst();
+    const reply = await client.review_reply.findFirst()
+    await client.review_reply.createMany(
+        {
+            data: getReview_reply(reviews?.id!, student?.id!, reply?.id!)
+        }
+    )
+    await client.test_details.createMany(
+        {
+            data: getTestdetails(subject?.sub_code!, staff?.id!)
+        }
+    )
+    const test = await client.test_details.findFirst()
+    await client.questions_details.createMany(
+        {
+            data: getQuestions_details(test?.test_id!)
+        }
+    )
+    await client.student_test_details.createMany(
+        {
+            data: getstudent_test_details(test?.test_id!, student?.id!)
+        }
+    )
+    const question = await client.questions_details.findMany();
+    await Promise.all ( question.map(async (questions_details,index) => 
+    {
         
-    ),
-});
+        await client.student_answers.create(
+            {
+                data: getStudent_answers(questions_details?.q_id!, student?.id!)[index]
+            })
+    }))
+      
+        
 
-
+    await client.test_history.createMany(
+        {
+            data: getTestHistory(test?.test_id!, student?.id!)
+        }
+    )
 };
 main()
     .then(() => {
