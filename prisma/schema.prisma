@@ -25,7 +25,8 @@ model users {
   note            notes[]
   session         session_details[]
   test_history    test_history[]
-
+  about_me String
+prof_image String
   semesters       semesters         @relation(fields: [sem_no], references: [sem_no])
   sem_no          String
   role            Roles

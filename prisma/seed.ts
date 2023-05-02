@@ -197,6 +197,7 @@ const getUsers = (
             sem_no,
             mail_id: faker.internet.email(),
             password: faker.internet.password(),
+            
 
 
         },
