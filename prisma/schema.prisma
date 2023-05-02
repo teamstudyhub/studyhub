@@ -28,6 +28,7 @@ model users {
   prof_image      String
   about String
 
+
   semesters       semesters         @relation(fields: [sem_no], references: [sem_no])
   sem_no          String
   role            Roles
@@ -200,8 +201,8 @@ model student_answers {
 
   questions_details questions_details @relation(fields: [q_id], references: [q_id])
   q_id              String            @db.Uuid
-  users             users             @relation(fields: [usersId], references: [id])
-  usersId           String            @db.Uuid
+  users             users            @relation(fields: [usersId], references: [id])
+  usersId           String           @db.Uuid
 }
 
 model test_history {

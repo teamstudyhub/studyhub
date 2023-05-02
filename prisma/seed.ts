@@ -228,15 +228,12 @@ const getUsers = (
         usersId: usersId,
         reg_no: "465CS20022",
         bio: "programming is life",
-
     },
 ];
 const getUser_details_staff = (usersId: string): Prisma.user_detailsCreateManyInput[] => [
     {
         usersId: usersId,
         qualification: "OS and python",
-
-
     },
 ]*/
 
