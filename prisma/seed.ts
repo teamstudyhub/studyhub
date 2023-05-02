@@ -75,6 +75,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -88,6 +89,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -101,6 +103,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -114,6 +117,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -127,6 +131,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -140,6 +145,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STUDENT",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -153,6 +159,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STUDENT",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -166,6 +173,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STUDENT",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -179,6 +187,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STUDENT",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
@@ -192,12 +201,12 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STUDENT",
+            prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
             password: faker.internet.password(),
-            
 
 
         },
@@ -209,15 +218,12 @@ const getUsers = (
         usersId: usersId,
         reg_no: "465CS20022",
         bio: "programming is life",
-
     },
 ];
 const getUser_details_staff = (usersId: string): Prisma.user_detailsCreateManyInput[] => [
     {
         usersId: usersId,
         qualification: "OS and python",
-
-
     },
 ]*/
 
