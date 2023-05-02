@@ -26,7 +26,7 @@ model users {
   session         session_details[]
   test_history    test_history[]
   prof_image      String
-  about String
+  about           String?
 
   semesters       semesters         @relation(fields: [sem_no], references: [sem_no])
   sem_no          String
