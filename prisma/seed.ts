@@ -49,6 +49,20 @@ const getCollege = (): Prisma.collegeCreateInput[] => [
         college_mail: "ksit@gmail.com",
         college_website: "ksit.com",
     },
+    {
+        college_code: "365",
+        college_name: "svp",
+        address: "banglore",
+        college_mail: "svp@gmail.com",
+        college_website: "svp.com",
+    },
+    {
+        college_code: "265",
+        college_name: "dsit",
+        address: "banglore",
+        college_mail: "dsit@gmail.com",
+        college_website: "dsit.com",
+    },
 ];
 
 const getUsers = (
@@ -57,62 +71,139 @@ const getUsers = (
     sem_no: string
 ): Prisma.usersCreateManyInput[] => [
         {
-            first_name: "Rajath ",
-            last_name: "R",
-            address: "banglore",
-            password: "12345678",
-
-            mail_id: "rajath@gmail.com",
-            branch_name: branch_name,
-            college_code: college_code,
-            role: "STUDENT",
-            sem_no: sem_no,
-        },
-        {
-            first_name: "Raksha",
-            last_name: "R",
-            address: "banglore",
-            password: "12345678",
-            mail_id: "raksha@gmail.com",
-            branch_name: branch_name,
-            college_code: college_code,
-            role: "STUDENT",
-            sem_no: sem_no,
-        },
-        {
-            first_name: "mangala",
-            last_name: "R",
-            address: "banglore",
-            password: "12345678",
-            mail_id: "mangala@gmail.com",
-            branch_name: branch_name,
-            college_code: college_code,
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
             role: "STAFF",
-            sem_no: sem_no,
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
         },
         {
-            first_name: "Abu ",
-            last_name: "Talha",
-            address: "banglore",
-            password: "12345678",
-            mail_id: "abu@gmail.com",
-            branch_name: branch_name,
-            college_code: college_code,
-            role: "STUDENT",
-            sem_no: sem_no,
-        }, {
-            first_name: "Ningappa ",
-            last_name: "tango",
-            address: "banglore",
-            password: "12345678",
-            mail_id: "tango@gmail.com",
-            branch_name: branch_name,
-            college_code: college_code,
-            role: "STUDENT",
-            sem_no: sem_no,
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
         },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STUDENT",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STUDENT",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STUDENT",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STUDENT",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STUDENT",
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password: faker.internet.password(),
+
+
+        },
+
+
     ];
-const getUser_details_student = (usersId: string): Prisma.user_detailsCreateManyInput[] => [
+/*const getUser_details_student = (usersId: string): Prisma.user_detailsCreateManyInput[] => [
     {
         usersId: usersId,
         reg_no: "465CS20022",
@@ -127,7 +218,7 @@ const getUser_details_staff = (usersId: string): Prisma.user_detailsCreateManyIn
 
 
     },
-];
+]*/
 
 const getSubjects = (sem_no: string): Prisma.subjectsCreateManyInput[] => [
     {
@@ -152,16 +243,17 @@ const getSubjects = (sem_no: string): Prisma.subjectsCreateManyInput[] => [
     }
 ]
 const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code: string): Prisma.notesCreateManyInput[] => [
+
+
     {
-        id: "c3a74524-4d80-4f4f-bab0-c0416e4ced3e",
         branch_name: branch_name,
-        dislikes: 12,
-        likes: 100,
+        dislikes: faker.datatype.number(3),
+        likes: faker.datatype.number(3),
         sem_no: sem_no,
         sub_code: sub_code,
-        title: "Operating systems week 1",
-        unit_name: "introduction to os",
-        unit_no: "1",
+        title: faker.lorem.sentence(5),
+        unit_name: faker.lorem.text(),
+        unit_no: faker.random.numeric(),
         usersId: usersId
 
     },
@@ -172,21 +264,29 @@ const getfavourites = (notes_id: string, usersId: string,): Prisma.favouritesCre
         notes_id,
     }
 ]
-const getReviews = (notes_id: string, user_id: string,): Prisma.reviewCreateManyInput[] => [
+/*const getReviews = (notes_id: string, user_id: string,): Prisma.reviewCreateManyInput[] => [
     {
         user_id,
         notes_id,
         review_content: "very clear and easy to understand"
     }
-]
+]*/
 const getReview_reply = (reviewId: string, usersId: string, review_reply_id: string): Prisma.review_replyCreateManyInput[] => [
     {
         usersId,
         reviewId,
-        content: "yes",
+        content: faker.lorem.sentences(3),
         review_reply_id
 
-    }
+    },
+    {
+        usersId,
+        reviewId,
+        content: faker.lorem.sentences(3),
+        review_reply_id
+
+    },
+
 ]
 const getTestdetails = (sub_code: string, usersId: string,): Prisma.test_detailsCreateManyInput[] => [
     {
@@ -194,7 +294,31 @@ const getTestdetails = (sub_code: string, usersId: string,): Prisma.test_details
         usersId,
         test_title: "os week 1 unit test",
 
-    }
+    },
+    {
+        sub_code,
+        usersId,
+        test_title: "os week 2 unit test",
+
+    },
+    {
+        sub_code,
+        usersId,
+        test_title: "os week 3 unit test",
+
+    },
+    {
+        sub_code,
+        usersId,
+        test_title: "os week 4 unit test",
+
+    },
+    {
+        sub_code,
+        usersId,
+        test_title: "os week 5 unit test",
+
+    },
 ]
 const getQuestions_details = (test_id: string): Prisma.questions_detailsCreateManyInput[] => [
     {
@@ -314,21 +438,33 @@ const main = async () => {
         }
     });
     const college = await client.college.findFirst();
+
+
+
+
     await client.users.createMany({
         data: getUsers(branch?.branch_name!,
             college?.college_code!,
-            semesters!.sem_no!
-
-
-        ),
+            semesters!.sem_no
+        )
     });
 
-    const student = await client.users.findFirst({
+    const student = await client.users.findMany({
         where: {
             role: "STUDENT",
         }
     });
-    const staff = await client.users.findFirst({
+    const staff = await client.users.findMany({
+        where: {
+            role: "STAFF",
+        }
+    });
+    const student2 = await client.users.findFirst({
+        where: {
+            role: "STUDENT",
+        }
+    });
+    const staff2 = await client.users.findFirst({
         where: {
             role: "STAFF",
         }
@@ -344,14 +480,43 @@ const main = async () => {
         }
     });
 
+    await Promise.all(
+        staff.map(async (users) => {
+            await client.user_details.createMany({
+                data: [
+                    {
+                        usersId: users?.id!,
+                        qualification: faker.lorem.word(2)
 
 
-    await client.user_details.createMany({
+                    },]
+            })
+        })
+
+    )
+    await Promise.all(
+        student.map(async (users) => {
+            await client.user_details.createMany({
+                data: [
+                    {
+                        usersId: users?.id!,
+                        reg_no: faker.random.alphaNumeric(10),
+                        bio: faker.lorem.sentences(3)
+
+
+                    },]
+            })
+        })
+
+    )
+
+    /*await client.user_details.createMany({
         data: getUser_details_student(student?.id!),
     });
     await client.user_details.createMany({
         data: getUser_details_staff(staff?.id!),
-    });
+    });*/
+
     await client.subjects.createMany({
         data: getSubjects(semesters2?.sem_no!,),
     });
@@ -360,69 +525,99 @@ const main = async () => {
             sub_code: "20CS21P"
         }
     });
-    await client.notes.createMany({
-        data: getNotes(
-            branch2?.branch_name!,
-            semesters2?.sem_no!,
-            staff?.id!,
-            subject?.sub_code!
-        ),
-    });
+
+    for (let i = 0; i < 10; i++) {
+
+        await client.notes.createMany({
+            data: getNotes(
+                branch2?.branch_name!,
+                semesters2?.sem_no!,
+
+                staff2?.id!,
+                subject?.sub_code!
+            ),
+        });
+    }
 
 
-    const notes = await client.notes.findFirst();
-    await client.favourites.createMany({
-        data: getfavourites(notes?.id!,
-            student?.id!,
+    const notes_list = await client.notes.findMany();
+    await Promise.all(
+        notes_list.map(async (notes) => {
+            await client.favourites.createMany({
+                data: getfavourites(notes?.id!,
+                    student2?.id!,
 
-        ),
-    });
-    await client.review.createMany(
-        {
-            data: getReviews(notes?.id!, student?.id!)
-        }
-    );
-    const reviews = await client.review.findFirst();
-    const reply = await client.review_reply.findFirst()
-    await client.review_reply.createMany(
-        {
-            data: getReview_reply(reviews?.id!, student?.id!, reply?.id!)
-        }
-    )
-    await client.test_details.createMany(
-        {
-            data: getTestdetails(subject?.sub_code!, staff?.id!)
-        }
-    )
-    const test = await client.test_details.findFirst()
-    await client.questions_details.createMany(
-        {
-            data: getQuestions_details(test?.test_id!)
-        }
-    )
-    await client.student_test_details.createMany(
-        {
-            data: getstudent_test_details(test?.test_id!, student?.id!)
-        }
-    )
-    const question = await client.questions_details.findMany();
-    await Promise.all ( question.map(async (questions_details,index) => 
-    {
-        
-        await client.student_answers.create(
-            {
-                data: getStudent_answers(questions_details?.q_id!, student?.id!)[index]
+                ),
             })
-    }))
-      
-        
+        }))
 
-    await client.test_history.createMany(
+    const users_list = await client.users.findMany();
+    const note = await client.notes.findFirst();
+
+    
+        await Promise.all(
+            users_list.map(async (users) => {
+                await client.review.createMany(
+                    {
+                        data: [
+                            {
+                                user_id: users?.id,
+                                notes_id:note?.id,
+                                review_content: faker.lorem.sentences(2)
+                            },
+                        ]
+                    }
+                )
+            }))
+    
+
+const reviews = await client.review.findMany();
+const reply = await client.review_reply.findFirst()
+
+ 
+await Promise.all(reviews.map(async (review)=>{
+    await client.review_reply.createMany(
+    {
+        data: getReview_reply(review.id!, student2?.id!, reply?.id!)
+    }
+)}))
+    
+
+
+await client.test_details.createMany(
+    {
+        data: getTestdetails(subject?.sub_code!, staff2?.id!)
+    }
+)
+const test = await client.test_details.findFirst()
+await client.questions_details.createMany(
+    {
+        data: getQuestions_details(test?.test_id!)
+    }
+)
+await client.student_test_details.createMany(
+    {
+        data: getstudent_test_details(test?.test_id!, student2?.id!)
+    }
+)
+const question = await client.questions_details.findMany();
+await Promise.all(question.map(async (questions_details, index) => {
+
+    await client.student_answers.create(
         {
-            data: getTestHistory(test?.test_id!, student?.id!)
-        }
-    )
+            data: getStudent_answers(questions_details?.q_id!, student2?.id!)[index]
+        })
+}))
+
+
+
+await client.test_history.createMany(
+    {
+        data: getTestHistory(test?.test_id!, student2?.id!)
+    }
+)
 };
+
 main()
     .then(() => {
         console.log("Successfully Seeded");
