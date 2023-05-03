@@ -75,7 +75,7 @@ const getUsers = (
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
-            about:faker.lorem.paragraph(),
+            
             prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
@@ -91,7 +91,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STAFF",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -106,7 +106,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STAFF",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -121,7 +121,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STAFF",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -136,7 +136,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STAFF",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -151,7 +151,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -166,7 +166,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -181,7 +181,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -196,7 +196,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
@@ -211,7 +211,7 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            about:faker.lorem.paragraph(),
+            
             branch_name,
             college_code,
             sem_no,
