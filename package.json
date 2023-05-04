@@ -11,6 +11,7 @@
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "@prisma/client": "^4.13.0",
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "^18.16.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
