@@ -23,11 +23,9 @@ model users {
   branch          branch                 @relation(fields: [branch_name], references: [branch_name])
   favourites_list favourites[]
   note            notes[]
-  session         session_details[]
-  test_history    test_history[]
-  prof_image      String
-  
 
+  test_history test_history[]
+  prof_image   String
 
   semesters       semesters         @relation(fields: [sem_no], references: [sem_no])
   sem_no          String
@@ -40,6 +38,7 @@ model users {
   branch_name     String
   user_details    user_details[]
   student_answers student_answers[]
+  question_papers question_papers[]
 }
 
 model user_details {
@@ -59,12 +58,13 @@ enum Roles {
 }
 
 model subjects {
-  sub_code     String         @id
-  sub_name     String
-  semester     semesters      @relation(fields: [sem_no], references: [sem_no])
-  sem_no       String
-  notes        notes[]
-  test_details test_details[]
+  sub_code        String            @id
+  sub_name        String
+  semester        semesters         @relation(fields: [sem_no], references: [sem_no])
+  sem_no          String
+  notes           notes[]
+  test_details    test_details[]
+  question_papers question_papers[]
 }
 
 model semesters {
@@ -78,8 +78,9 @@ model semesters {
 model branch {
   branch_name String @id @unique
 
-  notes notes[]
-  users users[]
+  notes           notes[]
+  users           users[]
+  question_papers question_papers[]
 }
 
 model college {
@@ -146,13 +147,18 @@ model review_reply {
   content            String
 }
 
-model session_details {
-  session_id  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  login_time  DateTime @default(now())
-  logout_time DateTime @default(now())
-
-  users   users  @relation(fields: [usersId], references: [id])
-  usersId String @db.Uuid
+model question_papers {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  subject     subjects @relation(fields: [sub_code], references: [sub_code])
+  sub_code    String
+  branch      branch   @relation(fields: [branch_name], references: [branch_name])
+  branch_name String
+  user        users    @relation(fields: [user_id], references: [id])
+  user_id     String   @db.Uuid
+  file_url String?
+  title       String
+  year        String
+  uploaded_date DateTime?
 }
 
 model test_details {
@@ -201,8 +207,8 @@ model student_answers {
 
   questions_details questions_details @relation(fields: [q_id], references: [q_id])
   q_id              String            @db.Uuid
-  users             users            @relation(fields: [usersId], references: [id])
-  usersId           String           @db.Uuid
+  users             users             @relation(fields: [usersId], references: [id])
+  usersId           String            @db.Uuid
 }
 
 model test_history {

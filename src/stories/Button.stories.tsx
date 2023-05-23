@@ -3,7 +3,7 @@ import Button from '../components/Button';
 import {AiOutlineLogin} from "react-icons/ai"
 
 const meta: Meta<typeof Button> = {
-  title: 'examples/Button',
+  title: 'Button',
   component: Button,
 };
 
@@ -40,5 +40,20 @@ export const Disabled: Story = {
       type:"boolean",
       defaultValue:false
     }
+  },
+}
+export const Active: Story = {
+  args:{
+    intent:"active",
+    fullwidth:true,
+    children:"Active label",
+    LeftIcon:<AiOutlineLogin/>
+  },
+  argTypes:{
+    fullwidth:{
+      type:"boolean",
+      defaultValue:false
+    }
   }
+
 }
