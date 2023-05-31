@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient, Roles } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 import { Users } from "heroicons-react";
-
+import * as fakers from "@faker-js/faker"
 
 const client = new PrismaClient();
 
@@ -261,6 +261,10 @@ const getSubjects = (sem_no: string): Prisma.subjectsCreateManyInput[] => [
         sub_name: "Hardware"
     }
 ]
+const fileNameWithoutExtension = faker.system.commonFileName();
+const fileNameWithExtension = `${fileNameWithoutExtension}.pdf`;
+
+const pdfUrl = `https://example.com/files/${fileNameWithExtension}`;
 const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code: string): Prisma.notesCreateManyInput[] => [
 
 
@@ -268,6 +272,7 @@ const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code
         branch_name: branch_name,
         dislikes: faker.datatype.number(3),
         likes: faker.datatype.number(3),
+        file_url:pdfUrl,
         sem_no: sem_no,
         sub_code: sub_code,
         title: faker.lorem.sentence(5),
@@ -280,6 +285,7 @@ const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code
         branch_name: branch_name,
         dislikes: faker.datatype.number(3),
         likes: faker.datatype.number(3),
+        file_url:pdfUrl,
         sem_no: sem_no,
         sub_code: sub_code,
         title: faker.lorem.sentence(5),

@@ -21,6 +21,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@/store":[
+        "./store/*"
       ]
     },
     "plugins": [
