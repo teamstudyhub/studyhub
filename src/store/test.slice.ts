@@ -13,7 +13,7 @@ export const fetchTest = createAsyncThunk<
   "/Tests/fetchTest",
   async (_payload, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await SupaClient.from("users")
+      const response = await SupaClient.from("test_details")
         .select("*")
         
       const data = response.data;
