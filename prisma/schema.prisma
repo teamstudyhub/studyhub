@@ -189,6 +189,7 @@ model questions_details {
   student_answers student_answers[]
 }
 
+
 model student_test_details {
   id      String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   test    test_details @relation(fields: [test_id], references: [test_id])

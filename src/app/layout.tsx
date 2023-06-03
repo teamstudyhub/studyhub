@@ -1,4 +1,6 @@
+
 import "../styles/globals.css"
+import Providers from "./Providers";
 
 interface props{
     children:React.ReactNode
@@ -7,7 +9,7 @@ interface props{
 export default function RootLayout({ children }:props) {
     return (
       <html lang="en">
-        <body>{children}</body>
+        <body><Providers>{children}</Providers></body>
       </html>
     );
   }
