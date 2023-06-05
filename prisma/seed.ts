@@ -373,33 +373,38 @@ const getReview_reply = (reviewId: string, usersId: string, review_reply_id: str
     },
 
 ]
-const getTestdetails = (sub_code: string, usersId: string,): Prisma.test_detailsCreateManyInput[] => [
+const getTestdetails = (sub_code: string, usersId: string,sem_no:string): Prisma.test_detailsCreateManyInput[] => [
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 1 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 2 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 3 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 4 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 5 unit test",
 
@@ -676,7 +681,8 @@ const main = async () => {
                         {
                             user_id: users?.id,
                             notes_id: notes_list[randomIndex]?.id,
-                            review_content: faker.lorem.sentences(2)
+                            review_content: faker.lorem.sentences(2),
+                            uploaded_date: faker.date.recent()
                         },
                     ]
                 }
@@ -696,12 +702,15 @@ const main = async () => {
             }
         )
     }))
+const sem_list= await client.semesters.findMany()
+
 
     await Promise.all(sub_list.map(async (subjects) => {
         const randomIndex = Math.floor(Math.random() * staff_list.length)
+        const randomIndex1 = Math.floor(Math.random() * sem_list.length)
         await client.test_details.createMany(
             {
-                data: getTestdetails(subjects?.sub_code!, staff_list[randomIndex]?.id!)
+                data: getTestdetails(subjects?.sub_code!, staff_list[randomIndex]?.id!,sem_list[randomIndex1]?.sem_no!)
             }
         )
     }))

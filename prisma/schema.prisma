@@ -68,8 +68,9 @@ model subjects {
 }
 
 model semesters {
-  sem_no String  @id @unique
-  user   users[]
+  sem_no       String         @id @unique
+  test_details test_details[]
+  user         users[]
 
   subjects subjects[]
   notes    notes[]
@@ -129,6 +130,7 @@ model review {
   user           users          @relation(fields: [user_id], references: [id])
   user_id        String         @db.Uuid
   review_content String
+  uploaded_date  DateTime
   note           notes          @relation(fields: [notes_id], references: [id])
   notes_id       String         @default(uuid()) @db.Uuid
   review_replies review_reply[]
@@ -148,16 +150,16 @@ model review_reply {
 }
 
 model question_papers {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  subject     subjects @relation(fields: [sub_code], references: [sub_code])
-  sub_code    String
-  branch      branch   @relation(fields: [branch_name], references: [branch_name])
-  branch_name String
-  user        users    @relation(fields: [user_id], references: [id])
-  user_id     String   @db.Uuid
-  file_url String?
-  title       String
-  year        String
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  subject       subjects  @relation(fields: [sub_code], references: [sub_code])
+  sub_code      String
+  branch        branch    @relation(fields: [branch_name], references: [branch_name])
+  branch_name   String
+  user          users     @relation(fields: [user_id], references: [id])
+  user_id       String    @db.Uuid
+  file_url      String?
+  title         String
+  year          String
   uploaded_date DateTime?
 }
 
@@ -167,6 +169,7 @@ model test_details {
   test_title           String
   subject              subjects               @relation(fields: [sub_code], references: [sub_code])
   sub_code             String
+  
   questions_details    questions_details[]
   timelimit            DateTime?              @default(now())
   conduction_date      DateTime?              @default(now())
@@ -175,8 +178,10 @@ model test_details {
   student_test_details student_test_details[]
   test_history         test_history[]
 
-  users   users  @relation(fields: [usersId], references: [id])
-  usersId String @db.Uuid
+  users           users      @relation(fields: [usersId], references: [id])
+  usersId         String     @db.Uuid
+  semesters       semesters? @relation(fields: [sem_no], references: [sem_no])
+  sem_no String?
 }
 
 model questions_details {
@@ -188,7 +193,6 @@ model questions_details {
   test_id         String            @default(uuid()) @db.Uuid
   student_answers student_answers[]
 }
-
 
 model student_test_details {
   id      String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid

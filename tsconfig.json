@@ -23,7 +23,7 @@
         "./src/*"
       ],
       "@/store":[
-        "src/store/*"
+        "./src/store/*"
       ]
     },
     "plugins": [
