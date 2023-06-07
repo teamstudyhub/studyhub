@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import { AiOutlineUser } from "react-icons/ai";
-import "../logo.png"
+
 
 
 
@@ -8,14 +8,9 @@ export default function Signin() {
     return (
       <>
        
-        <div className="flex min-h-full bg-white w-1/2 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className=" h-fit bg-white w-4/5 block justify-center border-0 rounded-md px-6 py-8 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              width={30}
-              height={10}
-              src="../logo.png"
-              alt="Your Company"
-            />
+            
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Sign in to your account
             </h2>
