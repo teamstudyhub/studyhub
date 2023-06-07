@@ -1,7 +1,7 @@
 "use client"
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "../../../store";
 import React from 'react'
-import RootLayout from '../layout';
+import RootLayout from '../../layout';
 import Signin from "@/components/signin";
 
 const New = () => {

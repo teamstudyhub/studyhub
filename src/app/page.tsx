@@ -4,6 +4,7 @@ import Signin from "@/components/signin";
 import Ncard from "../components/notesCard";
 import { AiOutlineUser } from "react-icons/ai";
 import BasicDatePicker from "@/components/datepicker";
+import Signup from "@/components/signup";
 
 export default function Page() {
   return (
@@ -12,6 +13,7 @@ export default function Page() {
       <BasicDatePicker/><br /><br />
     <Signin/>
      <Ncard title="os week 1" dislikes={10} likes={20}/>
+     <Signup/>
       
     </div>
   );
