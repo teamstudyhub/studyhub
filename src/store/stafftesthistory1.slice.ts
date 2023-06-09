@@ -47,6 +47,18 @@ export const searchSlice = createSlice({
           state.isLoading = false;
           state.error = payload?.msg;
         });
+        builder.addCase(filter.pending, (state) => {
+          state.isLoading = true;
+          state.error = null;
+        })
+        builder.addCase(filter.fulfilled, (state, {payload}) => {
+          state.isLoading = false;
+          state.data = payload;
+        })
+        builder.addCase(filter.rejected, (state, {payload}) => {
+          state.isLoading = false;
+          state.error = payload?.msg;
+        });
 
 
 
@@ -103,7 +115,7 @@ export const searchSlice = createSlice({
       }
   );
 
- /* export const filter = createAsyncThunk<
+  export const filter = createAsyncThunk<
   any,
   void,
   //{subcode:string, string, semester:string},
@@ -113,22 +125,23 @@ export const searchSlice = createSlice({
       msg: string;
     };
   }
->("/searchSlice/filter",
+>("/staffhistory/filter",
     async ( payload, { fulfillWithValue, rejectWithValue } ) => {
       try {
         const response = await SupaClient.from('test_details')
         .select('*')
-        .eq('sem',1)
-        .and('sub_code','20CS21P'); 
+        .or('sem_no.eq.6,sub_code.eq.20CS23P')//,'sub_code.eq.20CS23P')
+      
         //.eq('sem','{payload.sem}').and('sub_code','{payload.subcode}'); 
         const data = response.data;
+        console.log("filter", data)
         return fulfillWithValue(data);
       } catch (e) {
         return rejectWithValue({ msg: "Something went wrong !" });
       }          
       }
   );
-  ("/searchSlice/testData",
+  /*("/searchSlice/testData",
     async ( payload, { fulfillWithValue, rejectWithValue } ) => {
       try {
         //USE GROUP BY QUERY, MANOJ SIR WILL HELP YOU HERE

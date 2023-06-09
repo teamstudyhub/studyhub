@@ -1,12 +1,25 @@
 "use client"
+import { NotesSelector, uploadnotes } from "@/store/displaynotes.slice";
+import { useAppDispatch } from "../../../hooks";
 import { useAppSelector } from "../../store";
 
 export default function Page() {
-    const DNotes = useAppSelector((state) => state.Displaynotes.data) as [];
-  return (<>
+  const dispatch = useAppDispatch();
+    const DNotes = useAppSelector((state)=>NotesSelector.selectAll) as [];
+  return (
     <div className="w-1/2 h-full border border-slate-600 relative overflow-hidden">
-    <h1>Display notes</h1>
+    <button onClick={()=>{
+      dispatch(uploadnotes())
+    }}>Load note</button>
+    {
+      DNotes?.map((note:any)=>{
+        return (
+          <div key={note.id}>
+            {note.title}
+          </div>
+        )
+      })
+    }
     </div>
-    </>
   );
 }

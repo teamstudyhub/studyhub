@@ -166,10 +166,10 @@ model question_papers {
 model test_details {
   test_id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  test_title           String
-  subject              subjects               @relation(fields: [sub_code], references: [sub_code])
-  sub_code             String
-  
+  test_title String
+  subject    subjects @relation(fields: [sub_code], references: [sub_code])
+  sub_code   String
+
   questions_details    questions_details[]
   timelimit            DateTime?              @default(now())
   conduction_date      DateTime?              @default(now())
@@ -178,10 +178,10 @@ model test_details {
   student_test_details student_test_details[]
   test_history         test_history[]
 
-  users           users      @relation(fields: [usersId], references: [id])
-  usersId         String     @db.Uuid
-  semesters       semesters? @relation(fields: [sem_no], references: [sem_no])
-  sem_no String?
+  users     users      @relation(fields: [usersId], references: [id])
+  usersId   String     @db.Uuid
+  semesters semesters? @relation(fields: [sem_no], references: [sem_no])
+  sem_no    String?
 }
 
 model questions_details {

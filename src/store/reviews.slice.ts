@@ -24,6 +24,38 @@ export const fetchReviews = createAsyncThunk<
     }
   }
 );
+export const postreview= createAsyncThunk<
+  any,
+  void,
+ /* {
+    id: string;
+    content: string;
+  },*/
+  {
+    rejectValue: {
+      msg: string;
+    };
+  }
+>(
+  "/Reviews/postreview",
+  async (payload, { fulfillWithValue, rejectWithValue,dispatch }) => {
+    try {
+      const response = await SupaClient.from("review")
+        .insert([
+          {review_content:'very nice quality',user_id:'b8aad5e9-142b-4827-a281-501cb37832e0',notes_id:'8733aad3-0b83-43db-9e84-37b096d56dc2'}
+        ]).select("*");
+       
+        //.single();
+      const data = response.data;
+      dispatch(postreview)
+      console.log(data)
+      
+      return fulfillWithValue(data);
+    } catch (e) {
+      return rejectWithValue({ msg: "Something went wrong !" });
+    }
+  }
+);
 interface InitialStateProps {
     isLoading: boolean;
     error: null | string | undefined;

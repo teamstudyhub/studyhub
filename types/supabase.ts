@@ -34,41 +34,402 @@ export interface Database {
   }
   public: {
     Tables: {
-      comments: {
+      branch: {
+        Row: {
+          branch_name: string
+        }
+        Insert: {
+          branch_name: string
+        }
+        Update: {
+          branch_name?: string
+        }
+      }
+      college: {
+        Row: {
+          address: string
+          college_code: string
+          college_mail: string
+          college_name: string
+          college_website: string
+        }
+        Insert: {
+          address: string
+          college_code: string
+          college_mail: string
+          college_name: string
+          college_website: string
+        }
+        Update: {
+          address?: string
+          college_code?: string
+          college_mail?: string
+          college_name?: string
+          college_website?: string
+        }
+      }
+      favourites: {
+        Row: {
+          fav_id: string
+          notes_id: string
+          usersId: string
+        }
+        Insert: {
+          fav_id?: string
+          notes_id: string
+          usersId: string
+        }
+        Update: {
+          fav_id?: string
+          notes_id?: string
+          usersId?: string
+        }
+      }
+      notes: {
+        Row: {
+          branch_name: string
+          dislikes: number
+          file_url: string | null
+          id: string
+          likes: number
+          limit_visibility: boolean | null
+          sem_no: string
+          sub_code: string
+          title: string
+          unit_name: string
+          unit_no: string
+          uploaded_date: string | null
+          usersId: string
+        }
+        Insert: {
+          branch_name: string
+          dislikes: number
+          file_url?: string | null
+          id?: string
+          likes: number
+          limit_visibility?: boolean | null
+          sem_no: string
+          sub_code: string
+          title: string
+          unit_name: string
+          unit_no: string
+          uploaded_date?: string | null
+          usersId: string
+        }
+        Update: {
+          branch_name?: string
+          dislikes?: number
+          file_url?: string | null
+          id?: string
+          likes?: number
+          limit_visibility?: boolean | null
+          sem_no?: string
+          sub_code?: string
+          title?: string
+          unit_name?: string
+          unit_no?: string
+          uploaded_date?: string | null
+          usersId?: string
+        }
+      }
+      question_papers: {
+        Row: {
+          branch_name: string
+          file_url: string | null
+          id: string
+          sub_code: string
+          title: string
+          uploaded_date: string | null
+          user_id: string
+          year: string
+        }
+        Insert: {
+          branch_name: string
+          file_url?: string | null
+          id?: string
+          sub_code: string
+          title: string
+          uploaded_date?: string | null
+          user_id: string
+          year: string
+        }
+        Update: {
+          branch_name?: string
+          file_url?: string | null
+          id?: string
+          sub_code?: string
+          title?: string
+          uploaded_date?: string | null
+          user_id?: string
+          year?: string
+        }
+      }
+      questions_details: {
+        Row: {
+          answer: string
+          options: string[] | null
+          q_id: string
+          question: string
+          test_id: string
+        }
+        Insert: {
+          answer: string
+          options?: string[] | null
+          q_id?: string
+          question: string
+          test_id: string
+        }
+        Update: {
+          answer?: string
+          options?: string[] | null
+          q_id?: string
+          question?: string
+          test_id?: string
+        }
+      }
+      review: {
+        Row: {
+          id: string
+          notes_id: string
+          review_content: string
+          uploaded_date: string | null
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          notes_id: string
+          review_content: string
+          uploaded_date?: string | null
+          user_id: string
+        }
+        Update: {
+          id?: string
+          notes_id?: string
+          review_content?: string
+          uploaded_date?: string | null
+          user_id?: string
+        }
+      }
+      review_reply: {
         Row: {
           content: string
-          created_at: string
           id: string
-          usersId: string | null
+          review_reply_id: string | null
+          reviewId: string
+          usersId: string
         }
         Insert: {
           content: string
-          created_at?: string
           id?: string
-          usersId?: string | null
+          review_reply_id?: string | null
+          reviewId: string
+          usersId: string
         }
         Update: {
           content?: string
-          created_at?: string
           id?: string
+          review_reply_id?: string | null
+          reviewId?: string
+          usersId?: string
+        }
+      }
+      semesters: {
+        Row: {
+          sem_no: string
+        }
+        Insert: {
+          sem_no: string
+        }
+        Update: {
+          sem_no?: string
+        }
+      }
+      student_answers: {
+        Row: {
+          answer: string
+          id: string
+          q_id: string
+          usersId: string
+        }
+        Insert: {
+          answer: string
+          id?: string
+          q_id: string
+          usersId: string
+        }
+        Update: {
+          answer?: string
+          id?: string
+          q_id?: string
+          usersId?: string
+        }
+      }
+      student_test_details: {
+        Row: {
+          duration: string
+          id: string
+          submitted_date: string
+          test_id: string
+          total_marks: number
+          usersId: string
+        }
+        Insert: {
+          duration?: string
+          id?: string
+          submitted_date?: string
+          test_id: string
+          total_marks: number
+          usersId: string
+        }
+        Update: {
+          duration?: string
+          id?: string
+          submitted_date?: string
+          test_id?: string
+          total_marks?: number
+          usersId?: string
+        }
+      }
+      subjects: {
+        Row: {
+          sem_no: string
+          sub_code: string
+          sub_name: string
+        }
+        Insert: {
+          sem_no: string
+          sub_code: string
+          sub_name: string
+        }
+        Update: {
+          sem_no?: string
+          sub_code?: string
+          sub_name?: string
+        }
+      }
+      test_details: {
+        Row: {
+          conduction_date: string | null
+          end_date: string | null
+          lifetime: boolean | null
+          sem_no: string | null
+          sub_code: string
+          test_id: string
+          test_title: string
+          timelimit: string | null
+          usersId: string
+        }
+        Insert: {
+          conduction_date?: string | null
+          end_date?: string | null
+          lifetime?: boolean | null
+          sem_no?: string | null
+          sub_code: string
+          test_id?: string
+          test_title: string
+          timelimit?: string | null
+          usersId: string
+        }
+        Update: {
+          conduction_date?: string | null
+          end_date?: string | null
+          lifetime?: boolean | null
+          sem_no?: string | null
+          sub_code?: string
+          test_id?: string
+          test_title?: string
+          timelimit?: string | null
+          usersId?: string
+        }
+      }
+      test_history: {
+        Row: {
+          conduction_date: string
+          id: string
+          marks_allocated: number
+          submitted_date: string
+          test_id: string
+          usersId: string
+        }
+        Insert: {
+          conduction_date?: string
+          id?: string
+          marks_allocated: number
+          submitted_date?: string
+          test_id: string
+          usersId: string
+        }
+        Update: {
+          conduction_date?: string
+          id?: string
+          marks_allocated?: number
+          submitted_date?: string
+          test_id?: string
+          usersId?: string
+        }
+      }
+      user_details: {
+        Row: {
+          bio: string | null
+          id: string
+          qualification: string | null
+          reg_no: string | null
+          usersId: string | null
+        }
+        Insert: {
+          bio?: string | null
+          id?: string
+          qualification?: string | null
+          reg_no?: string | null
+          usersId?: string | null
+        }
+        Update: {
+          bio?: string | null
+          id?: string
+          qualification?: string | null
+          reg_no?: string | null
           usersId?: string | null
         }
       }
       users: {
         Row: {
-          created_at: string
+          address: string
+          branch_name: string
+          college_code: string
+          first_name: string
           id: string
-          username: string
+          last_name: string
+          mail_id: string
+          password: string | null
+          prof_image: string
+          role: Database["public"]["Enums"]["Roles"]
+          sem_no: string
         }
         Insert: {
-          created_at?: string
+          address: string
+          branch_name: string
+          college_code: string
+          first_name: string
           id?: string
-          username: string
+          last_name: string
+          mail_id: string
+          password?: string | null
+          prof_image: string
+          role: Database["public"]["Enums"]["Roles"]
+          sem_no: string
         }
         Update: {
-          created_at?: string
+          address?: string
+          branch_name?: string
+          college_code?: string
+          first_name?: string
           id?: string
-          username?: string
+          last_name?: string
+          mail_id?: string
+          password?: string | null
+          prof_image?: string
+          role?: Database["public"]["Enums"]["Roles"]
+          sem_no?: string
         }
       }
     }
@@ -79,7 +440,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      Roles: "STAFF" | "STUDENT"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -248,3 +609,4 @@ export interface Database {
     }
   }
 }
+
