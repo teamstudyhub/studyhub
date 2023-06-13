@@ -1,3 +1,6 @@
+
+"use client"
+
 import { SetStateAction, useState } from "react";
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";

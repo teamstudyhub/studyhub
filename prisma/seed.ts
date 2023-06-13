@@ -2,6 +2,7 @@ import { Prisma, PrismaClient, Roles } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 import { Users } from "heroicons-react";
 import * as fakers from "@faker-js/faker"
+import { hash } from "bcrypt";
 
 const client = new PrismaClient();
 
@@ -66,38 +67,27 @@ const getCollege = (): Prisma.collegeCreateInput[] => [
     },
 ];
 
+
 const getUsers = (
     branch_name: string,
     college_code: string,
-    sem_no: string
-): Prisma.usersCreateManyInput[] => [
+    sem_no: string,
+    password:string
+    
+): Prisma.userCreateManyInput[] => [
         {
             first_name: faker.name.firstName(),
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
+          
 
             prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
-
-
-        },
-        {
-            first_name: faker.name.firstName(),
-            last_name: faker.name.lastName(),
-            address: faker.address.streetAddress(),
-            role: "STAFF",
-            prof_image: faker.internet.avatar(),
-
-            branch_name,
-            college_code,
-            sem_no,
-            mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -107,13 +97,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STAFF",
             prof_image: faker.internet.avatar(),
-
-
+          
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -123,12 +112,13 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STAFF",
             prof_image: faker.internet.avatar(),
+           
 
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -138,12 +128,27 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STAFF",
             prof_image: faker.internet.avatar(),
-
+         
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            prof_image: faker.internet.avatar(),
+            
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password,
 
 
         },
@@ -153,12 +158,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-
+            
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -168,12 +173,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-
+            
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -183,12 +188,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-
+           
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -198,12 +203,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-
+           
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -213,12 +218,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-
+           
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -495,6 +500,7 @@ const getTestHistory = (test_id: string, usersId: string): Prisma.test_historyCr
 
 
 const main = async () => {
+    await client.$connect();
     await client.question_papers.deleteMany();
     await client.student_answers.deleteMany();
 
@@ -507,12 +513,12 @@ const main = async () => {
     await client.favourites.deleteMany();
     await client.notes.deleteMany();
     await client.user_details.deleteMany();
-    await client.users.deleteMany();
+    await client.user.deleteMany();
     await client.subjects.deleteMany();
     await client.semesters.deleteMany();
     await client.branch.deleteMany();
     await client.college.deleteMany();
-
+    const hashedPassword = await hash("test1234",12)
     await client.college.createMany({
         data: getCollege(),
     });
@@ -538,29 +544,31 @@ const main = async () => {
 
 
 
-    await client.users.createMany({
+    await client.user.createMany({
         data: getUsers(branch?.branch_name!,
             college?.college_code!,
-            semesters!.sem_no
+            semesters!.sem_no,
+            hashedPassword,
+           
         )
     });
 
-    const student = await client.users.findMany({
+    const student = await client.user.findMany({
         where: {
             role: "STUDENT",
         }
     });
-    const staff = await client.users.findMany({
+    const staff = await client.user.findMany({
         where: {
             role: "STAFF",
         }
     });
-    const student2 = await client.users.findFirst({
+    const student2 = await client.user.findFirst({
         where: {
             role: "STUDENT",
         }
     });
-    const staff2 = await client.users.findFirst({
+    const staff2 = await client.user.findFirst({
         where: {
             role: "STAFF",
         }
@@ -621,7 +629,7 @@ const main = async () => {
             sub_code: "20CS21P"
         }
     });
-    const staff_list = await client.users.findMany({
+    const staff_list = await client.user.findMany({
         where: {
             role: "STAFF",
         }
@@ -647,7 +655,7 @@ const main = async () => {
 
 
     const notes_list = await client.notes.findMany();
-    const student_list = await client.users.findMany(
+    const student_list = await client.user.findMany(
         {
             where: {
                 role: "STUDENT"
@@ -667,7 +675,7 @@ const main = async () => {
             })
         }))
 
-    const users_list = await client.users.findMany();
+    const users_list = await client.user.findMany();
     const note = await client.notes.findFirst();
 
 
@@ -721,7 +729,7 @@ const sem_list= await client.semesters.findMany()
     const test = await client.test_details.findFirst()
     await client.questions_details.createMany(
         {
-            data: getQuestions_details(test?.test_id!)
+            data: getQuestions_details(test?.id!)
         }
     )
 
@@ -730,7 +738,7 @@ const sem_list= await client.semesters.findMany()
 
         await client.student_answers.create(
             {
-                data: getStudent_answers(questions_details?.q_id!, student2?.id!)[index]
+                data: getStudent_answers(questions_details?.id!, student2?.id!)[index]
             })
     }))
     const tests_list = await client.test_details.findMany()
@@ -738,14 +746,14 @@ const sem_list= await client.semesters.findMany()
         const randomIndex = Math.floor(Math.random() * tests_list.length)
         await client.test_history.createMany(
             {
-                data: getTestHistory(tests_list[randomIndex]?.test_id!, users?.id!)
+                data: getTestHistory(tests_list[randomIndex]?.id!, users?.id!)
             }
 
 
         ),
             await client.student_test_details.createMany(
                 {
-                    data: getstudent_test_details(tests_list[randomIndex]?.test_id!, users?.id!)
+                    data: getstudent_test_details(tests_list[randomIndex]?.id!, users?.id!)
                 }
             )
     }))

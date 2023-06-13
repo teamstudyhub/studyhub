@@ -7,8 +7,8 @@ import Link from 'next/link'
 export default function Signup2() {
     return (
     
-       
-        <div className=" h-fit bg-white w-4/5 block justify-center border-0 rounded-md px-6 py-8 lg:px-8">
+      <div className="block w-4/5 items-center"><div className=" items-center "><h1 className="flex justify-center text-3xl font-bold py-11">SIGN UP</h1></div>
+        <div className=" h-fit bg-white w-full block justify-center border-0 rounded-md px-6 py-8 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -115,6 +115,6 @@ export default function Signup2() {
            
           </div>
         </div>
-    
+    </div>
     )
   }
