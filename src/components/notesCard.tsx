@@ -2,8 +2,8 @@
 import React, { useState } from 'react'
 import { AiOutlineLike, AiOutlineDislike, AiOutlineComment, AiFillLike, AiFillDislike } from 'react-icons/ai'
 
-
-interface notesprops{
+ 
+interface notesprops{ 
   title1:string,  title2:string,  title3:string,  title4:string,  title5:string,   title6:string,  likes:number,dislikes:number
 }
 

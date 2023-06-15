@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SearchIcon } from "@heroicons/react/20/outline"
+import {SearchIcon}  from "@heroicons/react/outline";
 import { HeartIcon, ShareIcon } from '@heroicons/react/24/solid';
 
 const NotesResult: React.FC = () => {

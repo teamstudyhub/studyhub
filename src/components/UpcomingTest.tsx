@@ -4,7 +4,7 @@ import {CgNotes} from 'react-icons/cg'
 export default function Upcoming_Test (){
 return(
   <>
-<div className='flex flex-row mx-5 text-black border-4 border-gray-400 px-4 py-4 overflow-scroll'> 
+<div className='flex flex-row mx-5 my-10 text-black border-4 bg-white border-gray-400 px-4 py-4 overflow-scroll'> 
 
 <div className='mx-[20px] flex flex-col gap-3 items-center px-[10px] py-[10px] max-w-[200px] max-h-[180px] bg-white border-2 border-black drop-shadow-xl rounded-lg ' >
 <div >
@@ -30,7 +30,7 @@ return(
   
 </div>
  
-<div className='mx-[20px] flex flex-col gap-3 items-center px-[10px] py-[10px] max-w-[200px] max-h-[180px] bg-white border-2 border-black drop-shadow-xl rounded-lg ' >
+<div className='mx-[20px] flex flex-col   gap-3 items-center px-[10px] py-[10px] max-w-[200px] max-h-[180px] bg-white border-2 border-black drop-shadow-xl rounded-lg ' >
 <div >
  <h1>Data Structures</h1>
 </div>

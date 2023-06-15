@@ -5,10 +5,7 @@ import { UpcomingTest } from "@/stories/UpcomingTest.stories";
 export default function Page() {
     return(
       <div>
-       <div className='text-3xl px-16'><h1><b>Available tests</b></h1></div>
-           <Example/>
-           <div className='text-3xl px-16 '><h1><b>Upcoming tests</b></h1></div>
-      <Upcoming_Test/>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfPF9noKaQ4YMoKvxF7HxoVAQoiriqbq7WI6umhp5UHhYwquw/viewform?embedded=true" width="640" height="2847"   >Loading…</iframe>
       </div>
     );
   }
