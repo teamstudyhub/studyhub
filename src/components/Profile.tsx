@@ -2,7 +2,7 @@ export default function Page() {
     return (
       <div className="w-full max-w-xs rounded-xl bg-white px-12 py-8 border-2 border-gray-400 shadow-2xl text-center lg:px-18 lg:py-10">
         <img
-          src="/assets/avatars/dianne-russell.png"
+          src="https://img.freepik.com/free-photo/school-boy-with-book-park_23-2148199240.jpg?w=2000"
           className="inline-block h-20 w-20 rounded-full border-2"
         />
         <h2 className="text-xl font-bold text-black mt-3">My Profile</h2>

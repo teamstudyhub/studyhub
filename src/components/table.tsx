@@ -1,8 +1,9 @@
+"use client"
 import type { NextPage } from "next";
 
 const FrameComponent: NextPage = () => {
   return (
-    <div className="relative w-full h-[740px] text-center text-xl bg-white text-black font-roboto">
+    <div className="relative w-[1000px] rounded-md h-[740px] mt-4 text-center text-xl bg-white text-black font-roboto">
       <div className="absolute top-[0px] left-[0px] w-[988px] h-[740px]">
         <div className="absolute top-[71px] left-[44px] box-border w-[898px] h-[640px] border-[1px] border-solid border-black" />
         <div className="absolute top-[25px] left-[115px] box-border w-[827px] h-[46px] border-[1px] border-solid border-black" />
