@@ -2,5 +2,6 @@
 -[ ] signin 
 -[ ] signup
 -[ ] recently uploaded notes
--[ ] upcoming tests
--[ ] 
+
+-[ ] upload notes form
+-[ ] my uploads
