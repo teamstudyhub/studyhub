@@ -1,3 +1,9 @@
+import Card from "@/components/fav";
+
 export default function Page() {
-  return <h1 className="text-3xl font-bold">Dashboard / favourites</h1>;
-}
+    return (
+      <div>
+        <Card title="Operating system" likes={10} dislikes={3} comments={2} />
+      </div>
+    );
+  }

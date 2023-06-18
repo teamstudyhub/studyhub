@@ -8,11 +8,14 @@ module.exports = {
     extend: {
       backgroundImage: (theme) => ({
         'primary': `linear-gradient(to top,#3EB489,#00E18F})`,
+        //'loginbg':"url('./public/loginbg.png')"
       }),
       colors:{
         light:"#F1F1F1",
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }

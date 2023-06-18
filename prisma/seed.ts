@@ -1,6 +1,8 @@
 import { Prisma, PrismaClient, Roles } from "@prisma/client";
 import { faker } from "@faker-js/faker";
-
+import { Users } from "heroicons-react";
+import * as fakers from "@faker-js/faker"
+import { hash } from "bcrypt";
 
 const client = new PrismaClient();
 
@@ -65,23 +67,73 @@ const getCollege = (): Prisma.collegeCreateInput[] => [
     },
 ];
 
+
 const getUsers = (
     branch_name: string,
     college_code: string,
-    sem_no: string
-): Prisma.usersCreateManyInput[] => [
+    sem_no: string,
+    password:string
+    
+): Prisma.userCreateManyInput[] => [
         {
             first_name: faker.name.firstName(),
             last_name: faker.name.lastName(),
             address: faker.address.streetAddress(),
             role: "STAFF",
-            
+          
+
             prof_image: faker.internet.avatar(),
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            prof_image: faker.internet.avatar(),
+          
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password,
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            prof_image: faker.internet.avatar(),
+           
+
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password,
+
+
+        },
+        {
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            role: "STAFF",
+            prof_image: faker.internet.avatar(),
+         
+            branch_name,
+            college_code,
+            sem_no,
+            mail_id: faker.internet.email(),
+            password,
 
 
         },
@@ -96,53 +148,7 @@ const getUsers = (
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
-
-
-        },
-        {
-            first_name: faker.name.firstName(),
-            last_name: faker.name.lastName(),
-            address: faker.address.streetAddress(),
-            role: "STAFF",
-            prof_image: faker.internet.avatar(),
-            
-            
-            branch_name,
-            college_code,
-            sem_no,
-            mail_id: faker.internet.email(),
-            password: faker.internet.password(),
-
-
-        },
-        {
-            first_name: faker.name.firstName(),
-            last_name: faker.name.lastName(),
-            address: faker.address.streetAddress(),
-            role: "STAFF",
-            prof_image: faker.internet.avatar(),
-            
-            branch_name,
-            college_code,
-            sem_no,
-            mail_id: faker.internet.email(),
-            password: faker.internet.password(),
-
-
-        },
-        {
-            first_name: faker.name.firstName(),
-            last_name: faker.name.lastName(),
-            address: faker.address.streetAddress(),
-            role: "STAFF",
-            prof_image: faker.internet.avatar(),
-            
-            branch_name,
-            college_code,
-            sem_no,
-            mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -157,7 +163,7 @@ const getUsers = (
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -172,7 +178,7 @@ const getUsers = (
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -182,12 +188,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            
+           
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -197,12 +203,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            
+           
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -212,12 +218,12 @@ const getUsers = (
             address: faker.address.streetAddress(),
             role: "STUDENT",
             prof_image: faker.internet.avatar(),
-            
+           
             branch_name,
             college_code,
             sem_no,
             mail_id: faker.internet.email(),
-            password: faker.internet.password(),
+            password,
 
 
         },
@@ -260,6 +266,10 @@ const getSubjects = (sem_no: string): Prisma.subjectsCreateManyInput[] => [
         sub_name: "Hardware"
     }
 ]
+const fileNameWithoutExtension = faker.system.commonFileName();
+const fileNameWithExtension = `${fileNameWithoutExtension}.pdf`;
+
+const pdfUrl = `https://example.com/files/${fileNameWithExtension}`;
 const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code: string): Prisma.notesCreateManyInput[] => [
 
 
@@ -267,6 +277,20 @@ const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code
         branch_name: branch_name,
         dislikes: faker.datatype.number(3),
         likes: faker.datatype.number(3),
+        file_url:pdfUrl,
+        sem_no: sem_no,
+        sub_code: sub_code,
+        title: faker.lorem.sentence(5),
+        unit_name: faker.lorem.text(),
+        unit_no: faker.random.numeric(),
+        usersId: usersId
+
+    },
+    {
+        branch_name: branch_name,
+        dislikes: faker.datatype.number(3),
+        likes: faker.datatype.number(3),
+        file_url:pdfUrl,
         sem_no: sem_no,
         sub_code: sub_code,
         title: faker.lorem.sentence(5),
@@ -276,11 +300,59 @@ const getNotes = (branch_name: string, sem_no: string, usersId: string, sub_code
 
     },
 ]
+const getPapers = (branch_name: string, user_id: string, sub_code: string): Prisma.question_papersCreateManyInput[] => [
+    {
+        branch_name: branch_name,
+        sub_code: sub_code,
+        title: faker.lorem.sentence(4),
+        user_id: user_id,
+        year: faker.date.birthdate({ min: 2015, max: 2023, mode: 'year' }).toString()
+    },
+    {
+        branch_name: branch_name,
+        sub_code: sub_code,
+        title: faker.lorem.sentence(4),
+        user_id: user_id,
+        year: faker.date.birthdate({ min: 2015, max: 2023, mode: 'year' }).toString()
+    },
+    {
+        branch_name: branch_name,
+        sub_code: sub_code,
+        title: faker.lorem.sentence(4),
+        user_id: user_id,
+        year: faker.date.birthdate({ min: 2015, max: 2023, mode: 'year' }).toString()
+    },
+    {
+        branch_name: branch_name,
+        sub_code: sub_code,
+        title: faker.lorem.sentence(4),
+        user_id: user_id,
+        year: faker.date.birthdate({ min: 2015, max: 2023, mode: 'year' }).toString()
+    },
+    {
+        branch_name: branch_name,
+        sub_code: sub_code,
+        title: faker.lorem.sentence(4),
+        user_id: user_id,
+        year: faker.date.birthdate({ min: 2015, max: 2023, mode: 'year' }).toString()
+    }
+]
 const getfavourites = (notes_id: string, usersId: string,): Prisma.favouritesCreateManyInput[] => [
+
     {
         usersId,
         notes_id,
-    }
+    }, {
+        usersId,
+        notes_id,
+    }, {
+        usersId,
+        notes_id,
+    }, {
+        usersId,
+        notes_id,
+    },
+
 ]
 /*const getReviews = (notes_id: string, user_id: string,): Prisma.reviewCreateManyInput[] => [
     {
@@ -306,33 +378,38 @@ const getReview_reply = (reviewId: string, usersId: string, review_reply_id: str
     },
 
 ]
-const getTestdetails = (sub_code: string, usersId: string,): Prisma.test_detailsCreateManyInput[] => [
+const getTestdetails = (sub_code: string, usersId: string,sem_no:string): Prisma.test_detailsCreateManyInput[] => [
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 1 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 2 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 3 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 4 unit test",
 
     },
     {
         sub_code,
+        sem_no,
         usersId,
         test_title: "os week 5 unit test",
 
@@ -411,6 +488,11 @@ const getTestHistory = (test_id: string, usersId: string): Prisma.test_historyCr
         marks_allocated: 5,
         usersId,
         test_id
+    },
+    {
+        marks_allocated: 5,
+        usersId,
+        test_id
     }
 ]
 
@@ -418,8 +500,10 @@ const getTestHistory = (test_id: string, usersId: string): Prisma.test_historyCr
 
 
 const main = async () => {
+    await client.$connect();
+    await client.question_papers.deleteMany();
     await client.student_answers.deleteMany();
-    await client.session_details.deleteMany();
+
     await client.test_history.deleteMany();
     await client.student_test_details.deleteMany();
     await client.questions_details.deleteMany();
@@ -429,12 +513,12 @@ const main = async () => {
     await client.favourites.deleteMany();
     await client.notes.deleteMany();
     await client.user_details.deleteMany();
-    await client.users.deleteMany();
+    await client.user.deleteMany();
     await client.subjects.deleteMany();
     await client.semesters.deleteMany();
     await client.branch.deleteMany();
     await client.college.deleteMany();
-
+    const hashedPassword = await hash("test1234",12)
     await client.college.createMany({
         data: getCollege(),
     });
@@ -460,29 +544,31 @@ const main = async () => {
 
 
 
-    await client.users.createMany({
+    await client.user.createMany({
         data: getUsers(branch?.branch_name!,
             college?.college_code!,
-            semesters!.sem_no
+            semesters!.sem_no,
+            hashedPassword,
+           
         )
     });
 
-    const student = await client.users.findMany({
+    const student = await client.user.findMany({
         where: {
             role: "STUDENT",
         }
     });
-    const staff = await client.users.findMany({
+    const staff = await client.user.findMany({
         where: {
             role: "STAFF",
         }
     });
-    const student2 = await client.users.findFirst({
+    const student2 = await client.user.findFirst({
         where: {
             role: "STUDENT",
         }
     });
-    const staff2 = await client.users.findFirst({
+    const staff2 = await client.user.findFirst({
         where: {
             role: "STAFF",
         }
@@ -543,97 +629,145 @@ const main = async () => {
             sub_code: "20CS21P"
         }
     });
+    const staff_list = await client.user.findMany({
+        where: {
+            role: "STAFF",
+        }
+    })
+    const sub_list = await client.subjects.findMany()
 
-    for (let i = 0; i < 10; i++) {
+    await Promise.all(
+        staff_list.map(async (users) => {
+            const randomIndex = Math.floor(Math.random() * sub_list.length)
+            await client.notes.createMany({
+                data: getNotes(
+                    branch2?.branch_name!,
+                    semesters2?.sem_no!,
 
-        await client.notes.createMany({
-            data: getNotes(
-                branch2?.branch_name!,
-                semesters2?.sem_no!,
+                    users.id!,
+                    sub_list[randomIndex]?.sub_code!
+                ),
+            });
+        }))
 
-                staff2?.id!,
-                subject?.sub_code!
-            ),
-        });
-    }
+
+
 
 
     const notes_list = await client.notes.findMany();
+    const student_list = await client.user.findMany(
+        {
+            where: {
+                role: "STUDENT"
+            }
+        }
+    )
     await Promise.all(
-        notes_list.map(async (notes) => {
+
+
+        student_list.map(async (users) => {
+            const randomIndex = Math.floor(Math.random() * notes_list.length)
             await client.favourites.createMany({
-                data: getfavourites(notes?.id!,
-                    student2?.id!,
+                data: getfavourites(notes_list[randomIndex]?.id!,
+                    users?.id!,
 
                 ),
             })
         }))
 
-    const users_list = await client.users.findMany();
+    const users_list = await client.user.findMany();
     const note = await client.notes.findFirst();
 
-    
-        await Promise.all(
-            users_list.map(async (users) => {
-                await client.review.createMany(
-                    {
-                        data: [
-                            {
-                                user_id: users?.id,
-                                notes_id:note?.id,
-                                review_content: faker.lorem.sentences(2)
-                            },
-                        ]
-                    }
-                )
-            }))
-    
 
-const reviews = await client.review.findMany();
-const reply = await client.review_reply.findFirst()
+    await Promise.all(
+        users_list.map(async (users) => {
+            const randomIndex = Math.floor(Math.random() * notes_list.length)
+            await client.review.createMany(
 
- 
-await Promise.all(reviews.map(async (review)=>{
-    await client.review_reply.createMany(
-    {
-        data: getReview_reply(review.id!, student2?.id!, reply?.id!)
-    }
-)}))
-    
+                {
+                    data: [
+                        {
+                            user_id: users?.id,
+                            notes_id: notes_list[randomIndex]?.id,
+                            review_content: faker.lorem.sentences(2),
+                            uploaded_date: faker.date.recent()
+                        },
+                    ]
+                }
+            )
+        }))
 
 
-await client.test_details.createMany(
-    {
-        data: getTestdetails(subject?.sub_code!, staff2?.id!)
-    }
-)
-const test = await client.test_details.findFirst()
-await client.questions_details.createMany(
-    {
-        data: getQuestions_details(test?.test_id!)
-    }
-)
-await client.student_test_details.createMany(
-    {
-        data: getstudent_test_details(test?.test_id!, student2?.id!)
-    }
-)
-const question = await client.questions_details.findMany();
-await Promise.all(question.map(async (questions_details, index) => {
+    const reviews = await client.review.findMany();
+    const reply = await client.review_reply.findFirst()
 
-    await client.student_answers.create(
+
+    await Promise.all(reviews.map(async (review) => {
+        const randomIndex = Math.floor(Math.random() * student_list.length)
+        await client.review_reply.createMany(
+            {
+                data: getReview_reply(review.id!, student_list[randomIndex]?.id!, reply?.id!)
+            }
+        )
+    }))
+const sem_list= await client.semesters.findMany()
+
+
+    await Promise.all(sub_list.map(async (subjects) => {
+        const randomIndex = Math.floor(Math.random() * staff_list.length)
+        const randomIndex1 = Math.floor(Math.random() * sem_list.length)
+        await client.test_details.createMany(
+            {
+                data: getTestdetails(subjects?.sub_code!, staff_list[randomIndex]?.id!,sem_list[randomIndex1]?.sem_no!)
+            }
+        )
+    }))
+
+
+
+
+    const test = await client.test_details.findFirst()
+    await client.questions_details.createMany(
         {
-            data: getStudent_answers(questions_details?.q_id!, student2?.id!)[index]
-        })
-}))
+            data: getQuestions_details(test?.id!)
+        }
+    )
+
+    const question = await client.questions_details.findMany();
+    await Promise.all(question.map(async (questions_details, index) => {
+
+        await client.student_answers.create(
+            {
+                data: getStudent_answers(questions_details?.id!, student2?.id!)[index]
+            })
+    }))
+    const tests_list = await client.test_details.findMany()
+    await Promise.all(student_list.map(async (users) => {
+        const randomIndex = Math.floor(Math.random() * tests_list.length)
+        await client.test_history.createMany(
+            {
+                data: getTestHistory(tests_list[randomIndex]?.id!, users?.id!)
+            }
 
 
-
-await client.test_history.createMany(
-    {
-        data: getTestHistory(test?.test_id!, student2?.id!)
-    }
-)
+        ),
+            await client.student_test_details.createMany(
+                {
+                    data: getstudent_test_details(tests_list[randomIndex]?.id!, users?.id!)
+                }
+            )
+    }))
+    await Promise.all(
+        staff_list.map(async (users) => {
+            const randomIndex = Math.floor(Math.random() * sub_list.length)
+            await client.question_papers.createMany({
+                data: getPapers(
+                    branch2?.branch_name!,
+                    users.id!,
+                    sub_list[randomIndex]?.sub_code!
+                ),
+            });
+        }))
 };
 
 main()
