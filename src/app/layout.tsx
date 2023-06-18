@@ -8,7 +8,7 @@ interface props{
 export default function RootLayout({ children }:props) {
     return (
       <html lang="en">
-        <body className="h-[100vh] w-[100vw]"><Providers>{children}</Providers></body>
+        <body className="h-[100vh] w-[100vw] overflow-hidden"><Providers>{children}</Providers></body>
       </html>
     );
   }

@@ -12,6 +12,7 @@ import {IoExitOutline} from 'react-icons/io5'
 import { useState } from "react";
 import {IoMdNotificationsOutline} from "react-icons/io"
 import {FaRegUser} from "react-icons/fa"
+import Searchbar from "@/components/searchbar2";
 
 interface props {
   children: React.ReactNode;
@@ -38,8 +39,9 @@ export default function RootLayout({ children }: props) {
       >
        <div className="bg-[url('/logo.jpg')] bg-contain bg-no-repeat w-full h-[65px] mb-[7px] "></div>
         <ul className="flex flex-row gap-10">
+        <Searchbar />
         <li><IoMdNotificationsOutline size="2rem" color="#3EB489"/></li>
-         <Link href={'/profile'}><li><FaRegUser size="1.7rem" color="#3EB489"/></li></Link> 
+         <Link href={'/dashboard/profile'}><li><FaRegUser size="1.7rem" color="#3EB489"/></li></Link> 
         </ul>
       </nav>
       <div className="w-full h-full flex">

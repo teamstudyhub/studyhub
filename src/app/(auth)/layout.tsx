@@ -14,7 +14,7 @@ export default function RootLayout({ children }:props) {
         
         <main className="w-full h-full flex gap-0">
             <section className=" flex flex-1 bg-[url('/leftsection.png')] bg-cover bg-no-repeat h-full w-1/2 shadow-sm"></section>
-            <section className="flex flex-1 bg-[url('/rightsection.png')] bg-cover bg-no-repeat h-full w-full  items-center justify-center ">{children}</section></main>
+            <section className="flex flex-1 bg-[url('/rightsection.png')] bg-cover bg-no-repeat h-full w-full   justify-center overflow-y-scroll py-16">{children}</section></main>
        
     );
   }

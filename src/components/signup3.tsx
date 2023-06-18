@@ -106,11 +106,11 @@ export default function Signup3() {
               </div>
 
               <div pb-5 >
-             <Link href={"/signin"}></Link> <Button
+             <Link href={"/signin"}> <Button
               fullwidth
         intent={"primary"} >
         Create account
-      </Button>
+      </Button></Link>
       
               </div>
             </form>
