@@ -34,6 +34,73 @@ export interface Database {
   }
   public: {
     Tables: {
+      Account: {
+        Row: {
+          access_token: string | null
+          expires_at: number | null
+          id: string
+          id_token: string | null
+          provider: string
+          providerAccountId: string
+          refresh_token: string | null
+          scope: string | null
+          session_state: string | null
+          token_type: string | null
+          type: string
+          userId: string
+        }
+        Insert: {
+          access_token?: string | null
+          expires_at?: number | null
+          id?: string
+          id_token?: string | null
+          provider: string
+          providerAccountId: string
+          refresh_token?: string | null
+          scope?: string | null
+          session_state?: string | null
+          token_type?: string | null
+          type: string
+          userId: string
+        }
+        Update: {
+          access_token?: string | null
+          expires_at?: number | null
+          id?: string
+          id_token?: string | null
+          provider?: string
+          providerAccountId?: string
+          refresh_token?: string | null
+          scope?: string | null
+          session_state?: string | null
+          token_type?: string | null
+          type?: string
+          userId?: string
+        }
+      }
+      answers: {
+        Row: {
+          answer: string
+          id: string
+          marks: number
+          questionsId: string | null
+          userId: string | null
+        }
+        Insert: {
+          answer: string
+          id?: string
+          marks: number
+          questionsId?: string | null
+          userId?: string | null
+        }
+        Update: {
+          answer?: string
+          id?: string
+          marks?: number
+          questionsId?: string | null
+          userId?: string | null
+        }
+      }
       branch: {
         Row: {
           branch_name: string
@@ -68,21 +135,24 @@ export interface Database {
           college_website?: string
         }
       }
-      favourites: {
+      marks: {
         Row: {
-          fav_id: string
-          notes_id: string
-          usersId: string
+          id: string
+          marks: number
+          testsId: string | null
+          userId: string | null
         }
         Insert: {
-          fav_id?: string
-          notes_id: string
-          usersId: string
+          id?: string
+          marks: number
+          testsId?: string | null
+          userId?: string | null
         }
         Update: {
-          fav_id?: string
-          notes_id?: string
-          usersId?: string
+          id?: string
+          marks?: number
+          testsId?: string | null
+          userId?: string | null
         }
       }
       notes: {
@@ -132,105 +202,27 @@ export interface Database {
           usersId?: string
         }
       }
-      question_papers: {
+      questions: {
         Row: {
-          branch_name: string
-          file_url: string | null
+          answer: string
+          choices: string[] | null
           id: string
-          sub_code: string
-          title: string
-          uploaded_date: string | null
-          user_id: string
-          year: string
-        }
-        Insert: {
-          branch_name: string
-          file_url?: string | null
-          id?: string
-          sub_code: string
-          title: string
-          uploaded_date?: string | null
-          user_id: string
-          year: string
-        }
-        Update: {
-          branch_name?: string
-          file_url?: string | null
-          id?: string
-          sub_code?: string
-          title?: string
-          uploaded_date?: string | null
-          user_id?: string
-          year?: string
-        }
-      }
-      questions_details: {
-        Row: {
-          answer: string
-          options: string[] | null
-          q_id: string
           question: string
-          test_id: string
+          testsId: string | null
         }
         Insert: {
           answer: string
-          options?: string[] | null
-          q_id?: string
+          choices?: string[] | null
+          id?: string
           question: string
-          test_id: string
+          testsId?: string | null
         }
         Update: {
           answer?: string
-          options?: string[] | null
-          q_id?: string
+          choices?: string[] | null
+          id?: string
           question?: string
-          test_id?: string
-        }
-      }
-      review: {
-        Row: {
-          id: string
-          notes_id: string
-          review_content: string
-          uploaded_date: string | null
-          user_id: string
-        }
-        Insert: {
-          id?: string
-          notes_id: string
-          review_content: string
-          uploaded_date?: string | null
-          user_id: string
-        }
-        Update: {
-          id?: string
-          notes_id?: string
-          review_content?: string
-          uploaded_date?: string | null
-          user_id?: string
-        }
-      }
-      review_reply: {
-        Row: {
-          content: string
-          id: string
-          review_reply_id: string | null
-          reviewId: string
-          usersId: string
-        }
-        Insert: {
-          content: string
-          id?: string
-          review_reply_id?: string | null
-          reviewId: string
-          usersId: string
-        }
-        Update: {
-          content?: string
-          id?: string
-          review_reply_id?: string | null
-          reviewId?: string
-          usersId?: string
+          testsId?: string | null
         }
       }
       semesters: {
@@ -244,50 +236,24 @@ export interface Database {
           sem_no?: string
         }
       }
-      student_answers: {
+      Session: {
         Row: {
-          answer: string
+          expires: string
           id: string
-          q_id: string
-          usersId: string
+          sessionToken: string
+          userId: string
         }
         Insert: {
-          answer: string
+          expires: string
           id?: string
-          q_id: string
-          usersId: string
+          sessionToken: string
+          userId: string
         }
         Update: {
-          answer?: string
+          expires?: string
           id?: string
-          q_id?: string
-          usersId?: string
-        }
-      }
-      student_test_details: {
-        Row: {
-          duration: string
-          id: string
-          submitted_date: string
-          test_id: string
-          total_marks: number
-          usersId: string
-        }
-        Insert: {
-          duration?: string
-          id?: string
-          submitted_date?: string
-          test_id: string
-          total_marks: number
-          usersId: string
-        }
-        Update: {
-          duration?: string
-          id?: string
-          submitted_date?: string
-          test_id?: string
-          total_marks?: number
-          usersId?: string
+          sessionToken?: string
+          userId?: string
         }
       }
       subjects: {
@@ -307,91 +273,27 @@ export interface Database {
           sub_name?: string
         }
       }
-      test_details: {
+      tests: {
         Row: {
-          conduction_date: string | null
-          end_date: string | null
-          lifetime: boolean | null
-          sem_no: string | null
-          sub_code: string
-          test_id: string
+          id: string
+          subjectsSub_code: string | null
           test_title: string
-          timelimit: string | null
-          usersId: string
+          userId: string | null
         }
         Insert: {
-          conduction_date?: string | null
-          end_date?: string | null
-          lifetime?: boolean | null
-          sem_no?: string | null
-          sub_code: string
-          test_id?: string
+          id?: string
+          subjectsSub_code?: string | null
           test_title: string
-          timelimit?: string | null
-          usersId: string
+          userId?: string | null
         }
         Update: {
-          conduction_date?: string | null
-          end_date?: string | null
-          lifetime?: boolean | null
-          sem_no?: string | null
-          sub_code?: string
-          test_id?: string
+          id?: string
+          subjectsSub_code?: string | null
           test_title?: string
-          timelimit?: string | null
-          usersId?: string
+          userId?: string | null
         }
       }
-      test_history: {
-        Row: {
-          conduction_date: string
-          id: string
-          marks_allocated: number
-          submitted_date: string
-          test_id: string
-          usersId: string
-        }
-        Insert: {
-          conduction_date?: string
-          id?: string
-          marks_allocated: number
-          submitted_date?: string
-          test_id: string
-          usersId: string
-        }
-        Update: {
-          conduction_date?: string
-          id?: string
-          marks_allocated?: number
-          submitted_date?: string
-          test_id?: string
-          usersId?: string
-        }
-      }
-      user_details: {
-        Row: {
-          bio: string | null
-          id: string
-          qualification: string | null
-          reg_no: string | null
-          usersId: string | null
-        }
-        Insert: {
-          bio?: string | null
-          id?: string
-          qualification?: string | null
-          reg_no?: string | null
-          usersId?: string | null
-        }
-        Update: {
-          bio?: string | null
-          id?: string
-          qualification?: string | null
-          reg_no?: string | null
-          usersId?: string | null
-        }
-      }
-      users: {
+      User: {
         Row: {
           address: string
           branch_name: string
@@ -430,6 +332,46 @@ export interface Database {
           prof_image?: string
           role?: Database["public"]["Enums"]["Roles"]
           sem_no?: string
+        }
+      }
+      user_details: {
+        Row: {
+          bio: string | null
+          id: string
+          qualification: string | null
+          reg_no: string | null
+          usersId: string | null
+        }
+        Insert: {
+          bio?: string | null
+          id?: string
+          qualification?: string | null
+          reg_no?: string | null
+          usersId?: string | null
+        }
+        Update: {
+          bio?: string | null
+          id?: string
+          qualification?: string | null
+          reg_no?: string | null
+          usersId?: string | null
+        }
+      }
+      VerificationToken: {
+        Row: {
+          expires: string
+          identifier: string
+          token: string
+        }
+        Insert: {
+          expires: string
+          identifier: string
+          token: string
+        }
+        Update: {
+          expires?: string
+          identifier?: string
+          token?: string
         }
       }
     }
