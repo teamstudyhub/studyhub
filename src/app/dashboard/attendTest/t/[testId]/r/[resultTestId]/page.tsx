@@ -1,19 +1,34 @@
 "use client";
 import { useAppSelector } from "@/store/index";
 import { TestsSelector } from "@/store/tests.slice";
-import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Button } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
-import { toast } from "react-hot-toast";
-import { AiOutlineArrowLeft, AiOutlineCheckCircle } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { SupaClient } from "../../../../../../../../utils/supabase";
 
 export default function TestViewPage() {
   const router = useRouter();
   const parmas = useParams();
-  const id = parmas.testId;
+  const id = parmas.resultTestId;
   const feed = useAppSelector((state) => TestsSelector.selectById(state, id));
   const [state, setState] = useState<{ [key: string]: string }>({});
-  const [isSubmitting, setSubmit] = useState(false);
+  const [gain, setGain] = useState<undefined|number>(0);
+  const [total, setTotal] = useState<undefined|number>(0);
+
+  useEffect(() => {
+    SupaClient.from("questions")
+      .select("answers(marks)")
+      .eq("testsId", id)
+      .then((value) => {
+        const total = value.data
+          ?.map((question) => question.answers[0].marks)
+          .reduce((prev, cu) => prev + cu, 0);
+        console.log(total);
+        setGain(total);
+        setTotal(value.data?.length)
+      });
+  }, [id]);
 
   // const onSubmit = async () => {
   //   setSubmit(true);
@@ -55,8 +70,15 @@ export default function TestViewPage() {
         <div className="flex flex-col justify-center items-center gap-3">
           <AiOutlineCheckCircle className="text-6xl text-green-500" />
           <h1 className="text-xl">Total Marks</h1>
-          <h2 className="text-2xl">2</h2>
-          <Button variant="outlined" onClick={()=>router.replace(`/dashboard/attendTest`)} color="success" size="large">Ok</Button>
+          <h2 className="text-2xl">{gain} / {total}</h2>
+          <Button
+            variant="outlined"
+            onClick={() => router.replace(`/dashboard/attendTest`)}
+            color="success"
+            size="large"
+          >
+            Ok
+          </Button>
         </div>
       </div>
     </div>

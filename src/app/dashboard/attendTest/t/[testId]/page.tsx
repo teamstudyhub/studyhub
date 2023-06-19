@@ -31,7 +31,7 @@ export default function TestViewPage() {
             await SupaClient.from("answers").insert({
               answer: state[question.id],
               questionsId: question.id,
-              userId: "7fa09dd1-5e62-4e74-bd3c-bcbc3ae8b73c",
+              userId: "f83dec1e-ec63-4336-ab16-adabc21935f0",
               marks: state[question.id] == response.data?.answer ? 1 : 0,
             });
           })
@@ -40,9 +40,9 @@ export default function TestViewPage() {
         await SupaClient.from("marks").insert({
           marks: totalMarks,
           testsId: feed.id,
-          userId: "7fa09dd1-5e62-4e74-bd3c-bcbc3ae8b73c",
+          userId: "f83dec1e-ec63-4336-ab16-adabc21935f0",
         });
-        router.replace(`/dashboard/attendTest/t/${feed.id}/r/${feed.id}`);
+        // router.replace(`/dashboard/attendTest/t/${feed.id}/r/${feed.id}`);
       }
     } catch (e) {
       toast.error("Something went wrong!");
