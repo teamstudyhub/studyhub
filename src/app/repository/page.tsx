@@ -4,7 +4,7 @@ import { TestsSlice, fetchTest } from "../../store/test.slice";
 import { useCallback, useEffect, useState } from "react";
 import { SupaClient } from "./../../../utils/supabase";
 import { useParams } from "next/navigation";
-import { useAppDispatch } from "./../../../hooks";
+import { useAppDispatch } from "../../../utils/hooks";
 import { useSelector } from "react-redux";
 
 export default function Page() {

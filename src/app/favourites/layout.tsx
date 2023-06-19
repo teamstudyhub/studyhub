@@ -1,6 +1,6 @@
 "use client"
 import { store } from "@/store/index";
-import { useAppDispatch } from "../../../hooks";
+import { useAppDispatch } from "../../../utils/hooks";
 
 import { useEffect } from "react";
 import { fetchFavourites } from "@/store/favourites.slice";

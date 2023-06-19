@@ -1,6 +1,6 @@
 "use client"
 import { NotesSelector, uploadnotes } from "@/store/displaynotes.slice";
-import { useAppDispatch } from "../../../hooks";
+import { useAppDispatch } from "../../../utils/hooks";
 import { useAppSelector } from "../../store";
 
 export default function Page() {
