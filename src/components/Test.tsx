@@ -39,7 +39,7 @@ export default function Test({ feed }: { feed: Tests }) {
           </div>
         </div>
         <div className="flex items-center w-full py-3 px-2">
-          <Button color="success" variant="outline" fullWidth>Attend</Button>
+          <Button color="success" variant="outlined" fullWidth>Attend</Button>
         </div>
       </div>
     </div>
